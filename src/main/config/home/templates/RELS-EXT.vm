@@ -1,0 +1,8 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"  xmlns:rel="info:fedora/fedora-system:def/relations-external#" xmlns:xsi="http://www.w3.org/2001/XMLSchema">
+#if ($util.getMetadata($object, 'vitalPid') )
+#set($drosubset = $systemConfig.getString("", "transformerDefaults", "vital", "server", "subset"))
+    <rdf:description rdf:about="info:fedora/$util.getMetadata($object, 'vitalPid')">
+        <rel:isMemberOf rdf:resource="info:fedora/$drosubset"/>
+    </rdf:description>
+#end
+</rdf:RDF>

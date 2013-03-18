@@ -1,0 +1,186 @@
+#macro (openField $tag $ind1 $ind2)
+        <marc:datafield tag="$tag" ind1="$ind1" ind2="$ind2">
+#end
+
+#macro (closeField)
+        </marc:datafield>
+#end
+
+#macro (subField $code $value)
+            <marc:subfield code="$code">$util.encodeXml($value)</marc:subfield>
+#end
+
+#macro (showElementMarc $field $tagNumber $ind1 $ind2 $code $label $anzsrc)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set($value = $valueMap.get($key))
+        #if ($label != "")
+            #set($labelVal = $value.get($label))
+            #if ($anzsrc == "anzsrc")
+                #set($labelVal = $labelVal.split("-").get(0).trim())
+            #end
+        #else
+            #set($labelVal = $value.get($key))
+        #end
+
+        #if ("$!value" == "")
+        #else
+            #openField($tagNumber, $ind1, $ind2)
+            #subField($code, $labelVal)
+            #closeField()
+        #end
+    #end
+#end
+
+#macro (anzsrc $field $anzsrc)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set($map = $valueMap.get($key))
+        #set($label = $map.get("skos:prefLabel"))
+        #openField("654", "0", "0")
+        #subField("a", "${label}")
+        #subField("2", "ANZSRC-${anzsrc}")
+        #closeField()
+    #end
+#end
+
+#macro (basicField $tag $ind1 $ind2 $subfield $index)
+    #set ($value = $util.get($item, $index))
+    #if ("$!value" != "")
+        #openField($tag, $ind1, $ind2)
+        #subField($subfield, $value)
+        #closeField()
+    #end
+#end
+
+#macro (creators $field)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set($value = $valueMap.get($key).get("foaf:name"))
+        #if ($velocityCount == 1)
+            #openField("100", "1", " ")
+        #else
+            #openField("700", "1", " ")
+        #end
+        #subField("a", $value)
+        #closeField()
+    #end
+#end
+
+#macro (supervisors $field)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set($value = $valueMap.get($key).get("foaf:name"))
+        #openField("720", "1", " ")
+        #subField("a", $value)
+        #closeField()
+    #end
+#end
+
+#macro (control008)
+    #set ($leader = "")
+    #set ($date = $util.get($item, "dc:created"))
+    #foreach($part in $date.split("-"))
+        #if ($velocityCount == 1)
+            #set ($part = $part.substring(2))
+            #set ($leader = "${leader}${part}")
+        #else
+            #set ($leader = "${leader}${part}")
+        #end
+    #end
+    #set ($langUri = $util.get($item, "dc:language.dc:identifier"))
+    #if ("$!langUri" != "")
+        #set($lastIndex = $langUri.lastIndexOf('/') + 1 )
+        #set($lang = $langUri.substring($lastIndex) )
+    #else
+        #set($lang = "eng")
+    #end
+    ## http://www.loc.gov/marc/bibliographic/bd008a.html (All)
+    ## http://www.loc.gov/marc/bibliographic/bd008x.html (Mixed materials)
+    #set ($leader = "${leader}|||||||||xx      |           ${lang} |")
+    <marc:controlfield tag="008">$leader</marc:controlfield>
+#end
+
+#macro (control001)
+    ### Resolve the identifier
+    #set ($formId = $util.get($item, 'dc:identifier.rdf:PlainLiteral'))
+    #set ($formOrigin = $util.get($item, 'dc:identifier.redbox:origin'))
+
+    #set($pidProperty = $systemConfig.getString($defaultOnError, "curation", "pidProperty"))
+    #set ($pid = $util.getMetadata($object, $pidProperty))
+    #if ("$!pid" == "")
+        #set ($pid = $util.get($item, "metadata", "rdf:resource"))
+        #if ("$!pid" == "")
+            #set ($pid = $util.get($item, "metadata", "dc.identifier"))
+        #end
+    #end
+
+    #set ($identifier = "")
+    #if ($formOrigin == "internal")
+        #if ($pid != "")
+            #set ($identifier = $pid)
+        #else
+            #set ($identifier = "$urlBase/detail/$oid")
+        #end
+    #else
+        #set ($identifier = $formId)
+    #end
+    <marc:controlfield tag="001">$util.encodeXml($identifier)</marc:controlfield>
+#end
+
+<marc:collection xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim
+http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+    <marc:record>
+        <marc:leader>00000nmi a22000004u 4500</marc:leader>
+        #control001()
+        #control008()
+        #basicField("245", "0", "0", "a", "dc:title")
+        #basicField("655", " ", "4", "a", "dc:type.rdf:PlainLiteral")
+        #basicField("260", " ", " ", "c", "dc:created")
+
+        ## Language. Set Source to ISO639-2
+        #set ($langUri = $util.get($item, "dc:language.dc:identifier"))
+        #if ("$!langUri" != "")
+            #set($lastIndex = $langUri.lastIndexOf('/') + 1 )
+            #set($lang = $langUri.substring($lastIndex) )
+            #openField("041", " ", "7")
+            #subField("a", $lang)
+            #subField("2", "iso639-2b")
+            #closeField()
+        #end
+
+        #basicField("653", "0", "4", "a", "dc:coverage.redbox:timePeriod")
+
+        ## Description tab
+        #basicField("520", " ", " ", "a", "dc:description")
+        #showElementMarc("dc:relation.swrc:Publication", "856", "4", "2", "u", "dc:identifier", "")
+        #showElementMarc("dc:relation.bibo:Website", "856", "4", "2", "u", "dc:identifier", "")
+
+        ## People
+        ##basicField("100", "1", " ", "a", "dc:creator.foaf:Person.1.dc:title")
+        #creators("dc:creator.foaf:Person")
+        #supervisors("swrc:supervisor.foaf:Person")
+
+        ## Subjects
+        #anzsrc("dc:subject.anzsrc:for", "FOR")
+        #anzsrc("dc:subject.anzsrc:seo", "SEO")
+        #showElementMarc("dc:subject.vivo:keyword", "653", "0", "0", "a", "rdf:PlainLiteral", "")
+
+        ## Rights
+        #basicField("506", " ", " ", "a", "dc:accessRights.rdf:PlainLiteral")
+        #basicField("540", " ", " ", "a", "dc:accessRights.dc:RightsStatement")
+        #basicField("540", " ", " ", "a", "redbox:creativeCommonsLicense.dc:identifier")
+        #basicField("540", " ", " ", "a", "dc:license.dc:identifier")
+
+        ## Management
+        #set($defaultOnError = "&Invalid XML placeholder... prevents ANDS Harvesting records in error&")
+        #set ($institution = $systemConfig.getString($defaultOnError, "redbox.identity", "RIF-CS Group"))
+        #openField("710", "1", " ")
+            #subField("a", $institution)
+            #set ($affiliation = $util.get($item, "foaf:Organization.skos:prefLabel"))
+            #if ("$!affiliation" != "")
+            #subField("b", $affiliation)
+            #end
+        #closeField()
+    </marc:record>
+</marc:collection>

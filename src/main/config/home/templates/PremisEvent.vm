@@ -1,0 +1,15 @@
+<premis:premis xmlns:premis="http://www.loc.gov/standards/premis">
+    <premis:event>
+        <premis:eventIdentifier>290001</premis:eventIdentifier>
+        <premis:eventType>redbox-DRO ingest</premis:eventType>
+        <premis:eventDetail>redbox-DRO ingest</premis:eventDetail>
+        <premis:eventOutcomeInformation>
+            <premis:eventOutcome>Finished</premis:eventOutcome>
+            <premis:eventOutcomeDetail></premis:eventOutcomeDetail>
+        </premis:eventOutcomeInformation>
+#if ($util.getMetadata($object, 'vitalPid') )
+        <premis:linkingObjectIdentifier>$util.getMetadata($object, 'vitalPid')</premis:linkingObjectIdentifier>
+#end
+    </premis:event>
+</premis:premis>
+

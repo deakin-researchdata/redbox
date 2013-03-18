@@ -1,0 +1,17 @@
+#set($dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+
+
+<FezMD xmlns:xsi="http://www.w3.org/2001/XMLSchema">
+<xdis_id>371</xdis_id> 
+<sta_id>2</sta_id> 
+<ret_id>3</ret_id> 
+#if ($util.get($item, "dc:created") != "")
+#set($date_created = "$util.getDateTime($util.get($item, 'dc:created'), $dateFormat)Z")
+<created_date>$date_created</created_date> 
+#end
+
+#if ($util.get($item, 'dc:modified') != "")
+#set($date_updated = "$util.getDateTime($util.get($item, 'dc:modified'), $dateFormat)Z")
+<updated_date>$date_updated</updated_date> 
+#end
+</FezMD>
