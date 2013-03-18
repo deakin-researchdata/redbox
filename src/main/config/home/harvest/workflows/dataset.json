@@ -12,18 +12,12 @@
     },
 
     "transformer": {
-        "curation": ["local"],
+        "curation": ["vital"],
         "metadata": ["jsonVelocity"]
     },
     "curation": {
         "neverPublish": false,
         "alreadyCurated": false
-    },
-
-    "transformerOverrides": {
-        "local": {
-            "template": "${server.url.base}published/detail/[[OID]]"
-        }
     },
 
     "indexer": {

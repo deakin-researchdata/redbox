@@ -20,8 +20,19 @@ if [ -z "$TF_HOME" ]; then
 fi
 export REDBOX_VERSION="${redbox.version}"
 
+# Deakin specific directives
+export DRO_SERVER="${dro.server}"
+export DRO_USERNAME="${dro.username}"
+export DRO_PASSWORD="${dro.password}"
+export DRO_NAMESPACE="${dro.namespace}"
+export DRO_HANDLER="${dro.handler}"
+export DRO_SUBSET="${dro.subset}"
+
 # java class path
 export CLASSPATH="plugins/*:lib/*"
+
+# Deakin specific settings
+DEAKIN_OPTS="-Ddro.server=$DRO_SERVER -Ddro.username=$DRO_USERNAME -Ddro.password=$DRO_PASSWORD -Ddro.namespace=$DRO_NAMESPACE -Ddro.handler=$DRO_HANDLER -Ddro.subset=$DRO_SUBSET"
 
 # jvm memory settings
 JVM_OPTS="-XX:MaxPermSize=512m -Xmx512m -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n"
@@ -74,4 +85,4 @@ EXTRA_OPTS="-Dserver.url.base=$SERVER_URL -Damq.port=$AMQ_PORT -Damq.stomp.port=
 COMMONS_LOGGING="-Dorg.apache.commons.logging.LogFactory=org.apache.commons.logging.impl.SLF4JLogFactory"
 
 # set options for maven to use
-export JAVA_OPTS="$COMMONS_LOGGING $JVM_OPTS $JETTY_OPTS $SOLR_OPTS $PROXY_OPTS $CONFIG_DIRS $EXTRA_OPTS $MINT_OPTS"
+export JAVA_OPTS="$COMMONS_LOGGING $JVM_OPTS $JETTY_OPTS $SOLR_OPTS $PROXY_OPTS $CONFIG_DIRS $EXTRA_OPTS $MINT_OPTS $DEAKIN_OPTS"
