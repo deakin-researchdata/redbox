@@ -5,3 +5,5 @@ target/
 /.pydevproject
 
 .DS_Store
+.svn/
+settings.xml

@@ -2,6 +2,7 @@ ReDBox - Local Curation Demo
 ======================
 
 Sample institutional build with file system storage and local curation.
+Adding Vital 3 for Deakin
 
 Downloaded the latest builds here:
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.googlecode.redbox-mint</groupId>
+  <groupId>au.edu.deakin.researchdata</groupId>
   <artifactId>redbox-local-curation-demo</artifactId>
   <version>1.6-RC02-SNAPSHOT</version>
   <packaging>${packaging}</packaging>
-  <name>ReDBox - Local Curation Demo</name>
+  <name>ReDBox - Vital Curation Deakin - Fedora v3.x</name>
   <parent>
     <groupId>com.googlecode.redbox-mint</groupId>
     <artifactId>redbox</artifactId>
@@ -13,7 +13,7 @@
   </parent>
   <properties>
     <!-- Used in build -->
-    <redbox.version>1.6-RC01-SNAPSHOT</redbox.version>
+    <redbox.version>1.6-RC01</redbox.version>
     <package.finalname>${project.build.finalName}</package.finalname>
     <!-- Runtime values, will replace placeholders in config and control scripts -->
     <app.location.windows>${project.home}</app.location.windows>
@@ -21,8 +21,8 @@
     <server.port>9000</server.port>
     <amq.port>9101</amq.port>
     <amq.stomp.port>9102</amq.stomp.port>
-    <server.url.base>http://${ip.address}:${server.port}/redbox/</server.url.base>
-    <mint.proxy.server>http://localhost:9001</mint.proxy.server>
+    <server.url.base>http://${server.domain}/redbox/</server.url.base>
+    <mint.proxy.server>http://localhost:${mint.proxy.port}</mint.proxy.server>
     <mint.amq.broker>tcp://localhost:9201</mint.amq.broker>
     <dir.home>${project.home}/home</dir.home>
     <dir.portal>${project.home}/portal</dir.portal>
@@ -44,34 +44,34 @@
       <groupId>com.googlecode.redbox-mint</groupId>
       <artifactId>redbox-project</artifactId>
       <type>pom</type>
-      <version>1.6-RC01</version>
+      <version>${redbox.version}</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode.redbox-mint</groupId>
       <artifactId>redbox</artifactId>
       <type>pom</type>
-      <version>1.6-RC01</version>
+      <version>${redbox.version}</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode.redbox-mint</groupId>
       <artifactId>redbox-config</artifactId>
-      <version>1.6-RC01</version>
+      <version>${redbox.version}</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode.redbox-mint</groupId>
       <artifactId>redbox-secure-api</artifactId>
-      <version>1.6-RC01</version>
+      <version>${redbox.version}</version>
     </dependency>
     <dependency>
       <groupId>com.googlecode.redbox-mint</groupId>
       <artifactId>plugin-transaction-curation-redbox</artifactId>
-      <version>1.6-RC01</version>
+      <version>${redbox.version}</version>
     </dependency>
-    <!-- Local Curation Plugin (from Mint) -->
+    <!-- Vital (Fedora v3.x) Curation Plugin -->
     <dependency>
       <groupId>com.googlecode.redbox-mint</groupId>
-      <artifactId>plugin-transformer-local</artifactId>
-      <version>1.6-RC01</version>
+      <artifactId>redbox-vital-transformer-fedora3</artifactId>
+      <version>${redbox.version}</version>
     </dependency>
   </dependencies>
   <profiles>
