@@ -72,6 +72,14 @@ class VitalData:
             # And get its metadata
             metadata = object.getMetadata()
             vitalPid = metadata.getProperty("vitalPid")
+            pidProperty = metadata.getProperty(self.pidProperty)
+            self.log.debug("Object '{}' has pidProperty '{}'", id, pidProperty)
+
+            # Bug here: ReDBox always reindex Vital, even if not updated
+            if not pidProperty is None:
+                self.log.debug("Object '{}', pidProperty '{}' has already been published. Ignore.", id, pidProperty)
+                return True
+
             if vitalPid is None:
                 self.log.error("Object '{}' has invalid VITAL data", id)
                 self.throw_error("Object '%s' has invalid VITAL data" % id)
@@ -223,3 +231,4 @@ class VitalData:
         self.vc["response"].setStatus(500)
         self.writer.println("Error: " + message)
         self.writer.close()
+
