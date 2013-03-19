@@ -129,8 +129,8 @@
     "curation": {
         "curationEmailAddress": "${admin.email}",
         "curationRequiresConfirmation": false,
-        "pidProperty": "localPid",
-        "pidType": "local",
+        "pidProperty": "vitalHandle",
+        "pidType": "handle",
         "mintBroker": "${mint.amq.broker}",
         "relations": {
             "dc:relation.vivo:Dataset.0.dc:identifier": {
