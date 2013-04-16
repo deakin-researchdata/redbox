@@ -29,7 +29,7 @@
         #set($nameID = "")
     #end
 
-	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au">
+	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="">
 		<mods:namePart type="personal">$util.encodeXml($node.get("foaf:name"))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
