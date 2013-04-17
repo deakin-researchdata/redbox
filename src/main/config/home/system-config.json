@@ -134,7 +134,7 @@
         ]
     },
     "andsDoi": {
-        "apiKey": "TESTd652186962d02890e3a6f0caa3b19e177dd29ccc",
+        "apiKey": "${doi.key}",
         "apiBaseUrl": "https://services.ands.org.au/doi/1.1/",
         "doiProperty": "andsDoi",
         "security": {
@@ -171,19 +171,6 @@
                 },
                 "system": "redbox",
                 "optional": true
-            },
-            "dc:relation.vivo:Service.0.dc:identifier": {
-                "path": [
-                    "dc:relation",
-                    "vivo:Service"
-                ],
-                "identifier": [
-                    "dc:identifier"
-                ],
-                "relationship": [
-                    "vivo:Relationship",
-                    "rdf:PlainLiteral"
-                ]
             },
             "dc:creator.foaf:Person.0.dc:identifier": {
                 "path": [
