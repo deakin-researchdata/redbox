@@ -194,7 +194,9 @@
                         #set($rel = $value.getString("hasAssociationWith", "relationship"))
                         #set($desc = $value.getString("empty", "description"))
                         #if ($key != "empty")
-            <rif:relatedObject>
+            <rif:relatedObject
+                    identifier='$util.encodeXml($value.getString("empty", "identifier"))'
+            >
                 <rif:key>$util.encodeXml($key)</rif:key>
                             #if ($desc != "empty")
                 <rif:relation type="$util.encodeXml($rel)">
