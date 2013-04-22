@@ -27,12 +27,13 @@ export DRO_PASSWORD="${dro.password}"
 export DRO_NAMESPACE="${dro.namespace}"
 export DRO_HANDLER="${dro.handler}"
 export DRO_SUBSET="${dro.subset}"
+export DOI_KEY="${doi.key}"
 
 # java class path
 export CLASSPATH="plugins/*:lib/*"
 
 # Deakin specific settings
-DEAKIN_OPTS="-Ddro.server=$DRO_SERVER -Ddro.username=$DRO_USERNAME -Ddro.password=$DRO_PASSWORD -Ddro.namespace=$DRO_NAMESPACE -Ddro.handler=$DRO_HANDLER -Ddro.subset=$DRO_SUBSET"
+DEAKIN_OPTS="-Ddro.server=$DRO_SERVER -Ddro.username=$DRO_USERNAME -Ddro.password=$DRO_PASSWORD -Ddro.namespace=$DRO_NAMESPACE -Ddro.handler=$DRO_HANDLER -Ddro.subset=$DRO_SUBSET -Ddoi.key=$DOI_KEY"
 
 # jvm memory settings
 JVM_OPTS="-XX:MaxPermSize=512m -Xmx512m -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n"
