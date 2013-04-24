@@ -248,10 +248,34 @@
         #if ("$!value" != "")
             <rif:description type="rights" $lang>$util.encodeXml($value)</rif:description>
         #end
+        #################
 
-            #showRelatedInfo("dc:relation.swrc:Publication", "publication", "uri")
-            #showRelatedInfo("dc:relation.bibo:Website", "website", "uri")
-
+        #showRelatedInfo("dc:relation.swrc:Publication", "publication", "uri")
+        #showRelatedInfo("dc:relation.bibo:Website", "website", "uri")
+        #showRelatedInfo("dc:relation.vivo:Service", "service", "uri")
+       ##showRelatedObject("dc:relation.vivo:Service", "service", "local")
+ 
+        #set($showCitation = $util.get($item, "dc:biblioGraphicCitation.redbox:sendCitation"))
+        #if ("$!showCitation" != "" && $showCitation == "on")
+            #set($doiProperty = $systemConfig.getString($defaultOnError, "andsDoi", "doiProperty"))
+            #set ($doi = $util.getMetadata($object, $doiProperty))
+            ## Use the DOI by preference for a citation
+            #if ("$!doi" == "")
+                #set ($citeId = $identifier)
+                #set ($citeIdType = $identifierType)
+            #else
+                #set ($citeId = "http://dx.doi.org/${doi}")
+                #set ($citeIdType = "doi")
+            #end
+            <rif:citationInfo>
+            #set($citationString = $util.get($item, "dc:biblioGraphicCitation.skos:prefLabel"))
+            #if ("$!citationString" != "")
+                <rif:fullCitation style="Datacite">$util.encodeXml($citationString.replaceAll("\{ID_WILL_BE_HERE\}", $citeId))</rif:fullCitation>
+            #end
+            ## <rif:citationMetadata/> has now been removed.
+            ## See http://code.google.com/p/redbox-mint/issues/detail?id=77
+            </rif:citationInfo>
+        #end
         </rif:collection>
     </rif:registryObject>
 </rif:registryObjects>
