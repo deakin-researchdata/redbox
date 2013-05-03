@@ -487,6 +487,7 @@
         "skins": {
             "default": "default",
             "order": [
+                "du",
                 "local",
                 "dashboard",
                 "redbox"
