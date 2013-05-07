@@ -29,7 +29,26 @@
         #set($nameID = "")
     #end
 
-	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="">
+    ### Get NLA ID
+    #set($valueList = $item.getJsonSimpleList("relationships"))
+    #if($valueList)
+        #set($nlaid = "")
+        #set($nla_number = "")
+        #foreach($value in $valueList)
+            #if ($value.getBoolean(false, "isCurated"))
+                #set($rid = $value.getString("empty", "identifier"))
+                #if ("$!uri" == "$!rid")
+                    #set($nlaid = $value.getString("empty", "curatedPid"))
+                    #set($lastIndex = $nlaid.lastIndexOf('-') + 1 )
+                    #set($nla_number = $nlaid.substring($lastIndex) )
+                #end
+            #end
+        #end
+    #end
+
+
+    #if ("$!nameID" != "")
+	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="$util.encodeXml($nla_number)">
 		<mods:namePart type="personal">$util.encodeXml($node.get("foaf:name"))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
@@ -46,6 +65,7 @@
         #end
 	</mods:name>
     #end
+    #end
 
 
 
@@ -61,9 +81,28 @@
     #else
         #set($nameID = "")
     #end
+ 
+    ### Get NLA ID
+    #set($valueList = $item.getJsonSimpleList("relationships"))
+    #if($valueList)
+        #set($nlaid = "")
+        #set($nla_number = "")
+        #foreach($value in $valueList)
+            #if ($value.getBoolean(false, "isCurated"))
+                #set($rid = $value.getString("empty", "identifier"))
+                #if ("$!uri" == "$!rid")
+                    #set($nlaid = $value.getString("empty", "curatedPid"))
+                    #set($lastIndex = $nlaid.lastIndexOf('-') + 1 )
+                    #set($nla_number = $nlaid.substring($lastIndex) )
+                #end
+            #end
+        #end
+    #end
 
 
-	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au">
+
+    #if ("$!nameID" != "")
+	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="$util.encodeXml($nla_number)">
 		<mods:namePart type="personal">$util.encodeXml($node.get("foaf:name"))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
@@ -75,23 +114,24 @@
         <mods:displayForm>supervisor</mods:displayForm>
 	</mods:name>
     #end
+    #end
 
-
+ 
 
     ## Collaborators
 	#set($valueMap = $util.getList($item, "dc:contributor.locrel:clb"))
 	#foreach($key in $valueMap.keySet())
     #set($node=$valueMap.get($key))
-	<mods:name>
 		#set($affiliation = $node.get("foaf:Agent"))
 		#if($affiliation)
-        <mods:namePart type="corporate">$util.encodeXml($affiliation)</mods:namePart>
-        <mods:displayForm>collaborator</mods:displayForm>
-		<mods:role>
-			<mods:roleTerm type="text">associated name</mods:roleTerm>
-		</mods:role>
+        <mods:name>
+            <mods:namePart type="corporate">$util.encodeXml($affiliation)</mods:namePart>
+            <mods:displayForm>collaborator</mods:displayForm>
+            <mods:role>
+                <mods:roleTerm type="text">associated name</mods:roleTerm>
+            </mods:role>
+        </mods:name>
 		#end
-	</mods:name>
     #end
 
 
