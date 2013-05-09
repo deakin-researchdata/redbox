@@ -14,7 +14,7 @@
 
     "transformer": {
         "curation": ["vital"],
-        "metadata": ["jsonVelocity"]
+        "metadata": ["jsonVelocity","selfSubtoDataset"]
     },
     "curation": {
         "neverPublish": false,
