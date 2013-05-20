@@ -1085,6 +1085,12 @@
                     ["accessgroup", "is", "acg-researchdata-reviewer"]
                 ]
             ],
+            "librarian":[
+                [
+                    ["homeOrganization", "is", "deakin.edu.au"],
+                    ["accessgroup", "is", "acg-researchdata-reviewer"]
+                ]
+            ],
             "admin":[
                 [
                     ["homeOrganization", "is", "deakin.edu.au"],
