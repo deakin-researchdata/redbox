@@ -36,7 +36,7 @@ export CLASSPATH="plugins/*:lib/*"
 DEAKIN_OPTS="-Ddro.server=$DRO_SERVER -Ddro.username=$DRO_USERNAME -Ddro.password=$DRO_PASSWORD -Ddro.namespace=$DRO_NAMESPACE -Ddro.handler=$DRO_HANDLER -Ddro.subset=$DRO_SUBSET -Ddoi.key=$DOI_KEY"
 
 # jvm memory settings
-JVM_OPTS="-XX:MaxPermSize=512m -Xmx512m -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n"
+JVM_OPTS="-XX:MaxPermSize=512m -Xmx512m"
 
 # logging directories
 export SOLR_LOGS=$TF_HOME/logs/solr
