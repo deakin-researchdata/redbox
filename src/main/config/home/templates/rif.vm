@@ -2,20 +2,19 @@
     #set($valueMap = $util.getList($item, $field))
     #foreach($key in $valueMap.keySet())
         #set($value = $valueMap.get($key))
-        #if ($label != "")
+            #if ($label != "" && $value.get($label)!= "")				
             #set($labelVal = $value.get($label))
             #if ($anzsrc == "anzsrc")
                 #set($lastIndex = $labelVal.lastIndexOf('/') + 1 )
                 #set($labelVal = $labelVal.substring($lastIndex) )
             #end
     <$tag$attr>$util.encodeXml($labelVal)</$tag>
-        #else
-    <$tag$attr>$util.encodeXml($value.get($key))</$tag>
         #end
     #end
 #end
 
 #macro(showRelatedInfo $field $relatedInfoType $identifierType)
+    
     #set($valueMap = $util.getList($item, $field))
     #foreach($key in $valueMap.keySet())
         #set ($row = $valueMap.get($key))
@@ -27,32 +26,67 @@
             #if ("$!title" != "")
             <rif:title>$util.encodeXml($title)</rif:title>
             #end
-
-            #set ($notes = $row.get("skos:note"))
-            #if ("$!notes" != "")
-            <rif:notes>$util.encodeXml($notes)</rif:notes>
-            #end
+## Uncomment to map Notes as well
+##            #set ($notes = $row.get("skos:note"))
+##            #if ("$!notes" != "")
+##            <rif:notes>$util.encodeXml($notes)</rif:notes>
+##            #end
         </rif:relatedInfo>
         #end
     #end
 #end
 
-#macro(geoSpatial $field)
+#macro(showRelatedObject $field $relatedInfoType $identifierType)
+
     #set($valueMap = $util.getList($item, $field))
     #foreach($key in $valueMap.keySet())
-        <rif:coverage>
+        #set ($row = $valueMap.get($key))
+        #set ($value = $row.get("dc:identifier"))
+        #if ("$!value" != "")
+        <rif:relatedObject>
+            <rif:key>$util.encodeXml($value)</rif:key>
+            #set ($relationship = $row.get("vivo:Relationship.rdf:PlainLiteral"))
+            #if ("$relationship" != "")
+            <rif:relation type="$relationship"/>
+            #end
+        </rif:relatedObject>
+        #end
+    #end
+#end
+
+
+#macro(geoSpatialMacro $field)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
         #set($geoMap = $valueMap.get($key))
+        #set($wkt = $geoMap.get("redbox:wktRaw"))
+        #set($literal = $geoMap.get("rdf:PlainLiteral"))
         #set($type = $geoMap.get("dc:type"))
-        #set($name = $geoMap.get("rdf:PlainLiteral"))
-            <rif:spatial type="$type" $lang>$util.encodeXml($name)</rif:spatial>
+
+        #if($literal != "")
+            #### Non - OpenLayers data
+            #if($wkt == "")
+                <rif:coverage>
+                    <rif:spatial type="$type" $lang>$util.encodeXml($literal)</rif:spatial>
         #if($type == "text")
             #set($east = $geoMap.get("geo:long"))
             #set($north = $geoMap.get("geo:lat"))
             #if ("$!east" != "" &&"$!north" != "")
-            <rif:spatial type="dcmiPoint" $lang>name=$util.encodeXml($name); east=$east; north=$north</rif:spatial>
+                    <rif:spatial type="dcmiPoint" $lang>name=$util.encodeXml($literal); east=$east; north=$north; projection=WGS84</rif:spatial>
             #end
         #end
         </rif:coverage>
+
+
+            #### OpenLayers data
+            #else
+                #if($type != "")
+                    <rif:coverage>
+                        <rif:spatial type="$type" $lang>$util.encodeXml($literal)</rif:spatial>
+                    </rif:coverage>
+                #end
+            #end
+        #end
     #end
 #end
 
@@ -81,15 +115,20 @@
 #set ($identifierType = "")
 #if ($formOrigin == "internal")
     #if ($pid != "")
-        #set ($identifier = $pid)
-        #set ($identifierType = $pidType)
+        #set ($identifier = $util.encodeXml($pid))
+        #set ($identifierType = $util.encodeXml($pidType))
     #else
-        #set ($identifier = "$urlBase/detail/$oid")
+        #set ($identifier = $util.encodeXml("$urlBase/detail/$oid"))
         #set ($identifierType = "uri")
     #end
 #else
-    #set ($identifier = $formId)
-    #set ($identifierType = $formType)
+    #set ($identifier = $util.encodeXml($formId))
+    #set ($identifierType = $util.encodeXml($formType))
+#end
+#if ("$!identifier" == "")
+    ## We want invalid XML here so the record is never harvested without the correct ID
+    #set($identifier = "&Invalid ID: Not curated yet&")
+    #set ($identifierType = "invalid")
 #end
 
 ### Relationships
@@ -99,21 +138,21 @@
 #set($lang = "xml:lang=${quote}en${quote}")
 <rif:registryObjects xmlns:rif="http://ands.org.au/standards/rif-cs/registryObjects"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/home/orca/schemata/1.2.0/registryObjects.xsd">
+            xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.3/schema/registryObjects.xsd">
     <rif:registryObject group="$util.encodeXml($group)">
 
-        <rif:key>$util.encodeXml($identifier)</rif:key>
+        <rif:key>$identifier</rif:key>
         <rif:originatingSource>$urlBase</rif:originatingSource>
 
         #set($dateModified = "")
         #if ($util.get($item, 'dc:modified') != "")
-            #set($rawModified = "$util.getDateTime($util.get($item, 'dc:modified'), $dateFormat)Z")
+            #set($rawModified = "$util.getDateTime($util.get($item, 'dc:modified'), $dateFormat)")
             #set($dateModified = "dateModified=${quote}${rawModified}${quote}")
         #end
 
         #set($dateAccessioned = "")
         #if ($util.get($item, "dc:created") != "")
-            #set($rawAccessioned = "$util.getDateTime($util.get($item, 'dc:created'), $dateFormat)Z")
+            #set($rawAccessioned = "$util.getDateTime($util.get($item, 'dc:created'), $dateFormat)")
             #set($dateAccessioned = "dateAccessioned=${quote}${rawAccessioned}${quote}")
         #end
 
@@ -127,10 +166,11 @@
         ##  5) <rif:relatedObject>
         ##  6) <rif:subject>
         ##  7) <rif:description>
-        ##  8) <rif:relatedInfo>
-        ##  9) <rif:citationInfo>
+        ##  8)  <rif:rights>
+        ##  9)  <rif:relatedInfo>
+        ##  10) <rif:citationInfo>
         ##
-        ##  http://services.ands.org.au/documentation/rifcs/1.2.0/schemadocs/registryObjects.html
+        ##  http://services.ands.org.au/documentation/rifcs/1.3/schemadocs/registryObjects.html
         #################
         <rif:collection type="$util.get($item, "dc:type.rdf:PlainLiteral")" $dateModified $dateAccessioned>
             <rif:identifier type="$identifierType">$identifier</rif:identifier>
@@ -139,9 +179,15 @@
                 <rif:namePart>$util.encodeXml($util.get($item, "dc:title"))</rif:namePart>
             </rif:name>
 
-        ## Location, use Handle as priority if requested
-            <rif:location>
+        ## Location
         #set($valueMap = $util.getList($item, "bibo:Website"))
+        #set($firstValue = "")
+        #if ($valueMap.size() > 0)
+            #set($firstValue = $valueMap.get("1").get("dc:identifier"))
+        #end
+        #set ($physicalLocation = $util.get($item, "vivo:Location.vivo:GeographicLocation.gn:name"))
+        #if ("$!physicalLocation" != "" || "$!firstValue" != "")
+            <rif:location>
         #foreach($key in $valueMap.keySet())
             #set ($value = $valueMap.get($key).get("dc:identifier"))
             #if ("$!value" != "")
@@ -154,15 +200,15 @@
         #end
 
         #### Physical location
-        #set ($value = $util.get($item, "vivo:Location.vivo:GeographicLocation.gn:name"))
-        #if ("$!value" != "")
+            #if ("$!physicalLocation" != "")
                 <rif:address>
                     <rif:physical>
-                        <rif:addressPart type="text">$util.encodeXml($value)</rif:addressPart>
+                        <rif:addressPart type="text">$util.encodeXml($physicalLocation)</rif:addressPart>
                     </rif:physical>
                 </rif:address>
         #end
             </rif:location>
+        #end
 
         #set ($covFrom = $util.get($item, "dc:coverage.vivo:DateTimeInterval.vivo:start"))
         #set ($covTo = $util.get($item, "dc:coverage.vivo:DateTimeInterval.vivo:end"))
@@ -183,7 +229,7 @@
             </rif:coverage>
         #end
 
-            #geoSpatial("dc:coverage.vivo:GeographicLocation")
+            #geoSpatialMacro("dc:coverage.vivo:GeographicLocation")
 
             ### Relations
             #set($valueList = $item.getJsonSimpleList("relationships"))
@@ -194,9 +240,7 @@
                         #set($rel = $value.getString("hasAssociationWith", "relationship"))
                         #set($desc = $value.getString("empty", "description"))
                         #if ($key != "empty")
-            <rif:relatedObject
-                    identifier='$util.encodeXml($value.getString("empty", "identifier"))'
-            >
+            <rif:relatedObject>
                 <rif:key>$util.encodeXml($key)</rif:key>
                             #if ($desc != "empty")
                 <rif:relation type="$util.encodeXml($rel)">
@@ -211,11 +255,28 @@
                 #end
             #end
 
-            #showElementRifCS("rif:subject" "dc:subject.vivo:keyword", " type=${quote}local${quote} $lang", "rdf:PlainLiteral", "")
-            #showElementRifCS("rif:subject" "dc:subject.anzsrc:for", " type=${quote}anzsrc-for${quote} $lang", "rdf:resource", "anzsrc")
-            #showElementRifCS("rif:subject" "dc:subject.anzsrc:seo", " type=${quote}anzsrc-seo${quote} $lang", "rdf:resource", "anzsrc")
+            ### National Library Creators - Non-curated
+            #set($valueMap = $util.getList($item, "dc:creator.foaf:Person"))
+            #foreach($key in $valueMap.keySet())
+                #set ($value = $valueMap.get($key).get("dc:identifier"))
+                #if ("$!value" != "" && $value.startsWith("http://nla.gov.au/nla.party-"))
+            <rif:relatedObject>
+                <rif:key>$util.encodeXml($value)</rif:key>
+                <rif:relation type="hasCollector"></rif:relation>
+            </rif:relatedObject>
+                #end
+            #end
+			
+			
+			
+           	#showElementRifCS ("rif:subject"  "dc:subject.vivo:keyword"  " type=${quote}local${quote} $lang"  "rdf:PlainLiteral"  "")
+            #showElementRifCS ("rif:subject"  "dc:subject.anzsrc:for"  " type=${quote}anzsrc-for${quote} $lang"  "rdf:resource"  "anzsrc")
+            #showElementRifCS ("rif:subject"  "dc:subject.anzsrc:seo"  " type=${quote}anzsrc-seo${quote} $lang"  "rdf:resource"  "anzsrc")
+            
 
-        #set ($value = $util.get($item, "dc:subject.anzsrc:toa.rdf:resource"))
+			
+            
+        #set ($value = $util.get($item, "dc:subject.anzsrc:toa.skos:prefLabel"))
         #if ("$!value" != "")
             <rif:subject type="anzsrc-toa">$util.encodeXml($value)</rif:subject>
         #end
@@ -225,28 +286,45 @@
             <rif:description type="full" $lang>$util.encodeXml($value)</rif:description>
         #end
 
-        #set ($rights = $util.get($item, "dc:accessRights.dc:RightsStatement"))
-        #if ("$!rights" != "")
-            <rif:description type="rights" $lang>$util.encodeXml($rights)</rif:description>
+        #################
+        ## Rights
+        #set ($accessRights = $util.get($item, "dc:accessRights.skos:prefLabel"))
+        #set ($accessRightsUri = $util.get($item, "dc:accessRights.dc:identifier"))
+        #set ($accessRightsUriStr = "")
+        #if ("$!accessRightsUri" != "")
+            #set ($accessRightsUriStr = " rightsUri=${quote}${accessRightsUri}${quote}")
         #end
-
-        #### 'rights' is required, so send 'accessRights' as 'rights' if it was absent.
-        #set ($accessRights = $util.get($item, "dc:accessRights.rdf:PlainLiteral"))
-        #if ("$!accessRights" != "")
-            #if ("$!rights" != "")
-                <rif:description type="accessRights" $lang>$util.encodeXml($accessRights)</rif:description>
-            #else
-                <rif:description type="rights" $lang>$util.encodeXml($accessRights)</rif:description>
+        #set ($rights = $util.get($item, "dc:accessRights.dc:RightsStatement.skos:prefLabel"))
+        #set ($rightsUri = $util.get($item, "dc:accessRights.dc:RightsStatement.dc:identifier"))
+        #set ($rightsUriStr = "")
+        #if ("$!rightsUri" != "")
+            #set ($rightsUriStr = " rightsUri=${quote}${rightsUri}${quote}")
+        #end
+        #set ($licence = $util.get($item, "dc:license.skos:prefLabel"))
+        #set ($licenceUri = $util.get($item, "dc:license.dc:identifier"))
+        #set ($licenceUriStr = "")
+        #if ("$!licenceUri" != "")
+            #set ($licenceUriStr = " rightsUri=${quote}${licenceUri}${quote}")
+        #else
+            #set ($licence = $util.get($item, "dc:license.rdf:Alt.skos:prefLabel"))
+            #set ($licenceUri = $util.get($item, "dc:license.rdf:Alt.dc:identifier"))
+            #if ("$!licenceUri" != "")
+                #set ($licenceUriStr = " rightsUri=${quote}${licenceUri}${quote}")
             #end
         #end
-        #set ($value = $util.get($item, "redbox:creativeCommonsLicense.skos:prefLabel"))
-        #if ("$!value" != "")
-            <rif:description type="rights" $lang>$util.encodeXml($value)</rif:description>
-        #end
 
-        #set ($value = $util.get($item, "dc:license.skos:prefLabel"))
-        #if ("$!value" != "")
-            <rif:description type="rights" $lang>$util.encodeXml($value)</rif:description>
+        #if ("$!accessRights" != "" || "$!rights" != "" || "$!licence" != "")
+            <rif:rights>
+            #if ("$!rights" != "")
+                <rif:rightsStatement${rightsUriStr}>$util.encodeXml($rights)</rif:rightsStatement>
+            #end
+            #if ("$!accessRights" != "")
+                <rif:accessRights${accessRightsUriStr}>$util.encodeXml($accessRights)</rif:accessRights>
+        #end
+            #if ("$!licence" != "")
+                <rif:licence${licenceUriStr}>$util.encodeXml($licence)</rif:licence>
+        #end
+            </rif:rights>
         #end
         #################
 
