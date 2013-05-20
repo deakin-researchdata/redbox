@@ -1,0 +1,41 @@
+<link href="//static.deakin.edu.au/skin/cms/css/wmt-template.css?4.2" media="screen" rel="stylesheet" type="text/css" >
+<link href="//static.deakin.edu.au/skin/cms/css/content-styles.css?4.2" media="screen" rel="stylesheet" type="text/css" >
+<link href="//static.deakin.edu.au/skin/cms/css/colourscheme.css?4.2" media="screen" rel="stylesheet" type="text/css" >
+<link href="//static.deakin.edu.au/skin/cms/img/icon16.ico" rel="shortcut icon" >
+<link href="//static.deakin.edu.au/skin/cms/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="57x57" >
+<link href="//static.deakin.edu.au/skin/cms/img/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" >
+
+<div class="grid_16 branding">
+<div id="header-new">
+                <div class="skip"><a href="#content">Skip to content</a></div> 
+				<div class="banner" role="banner">
+					<a class="home-link" href="/"><img src="//static.deakin.edu.au/skin/cms/img/Deakin_Worldly_Logo-legacy.png" alt="Deakin University Australia" class="logo"></a>
+					<div class="banner-nav-container">
+					   <div class="quick-links">
+						</div>
+											
+						<div class="audience-links">
+						</div>
+					</div>
+				</div>
+
+        <div class="main-nav">
+			<div class="nav-container">
+				<ul id="mainmenu">
+						<!--
+						The active class is associated to the <li> instead of <a> in
+						this case due to the flyout. We can navigate the tree in css
+						between parent and child moving forward but not moving
+						backward. Making <a> and <ul> siblings and child of <li>
+						makes it easier on us
+						-->
+					<li>
+                        <a href="#" style="padding-bottom: 15px;">ReDBox</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		</div>
+</div>
+<div class="clear"></div>
