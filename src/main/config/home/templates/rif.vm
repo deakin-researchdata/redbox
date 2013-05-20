@@ -175,6 +175,27 @@
         <rif:collection type="$util.get($item, "dc:type.rdf:PlainLiteral")" $dateModified $dateAccessioned>
             <rif:identifier type="$identifierType">$identifier</rif:identifier>
 
+ 
+            ## Output DRO Uri as an identifier
+            #if ("$!identifier" != "" && $identifier.startsWith("DU"))
+                <rif:identifier type="uri">http://dro.deakin.edu.au/view/$identifier</rif:identifier>
+            #end
+            
+            ## Output DOI as an identifier
+            #set($showCitation = $util.get($item, "dc:biblioGraphicCitation.redbox:sendCitation"))
+            #if ("$!showCitation" != "" && $showCitation == "on")
+                #set($doiProperty = $systemConfig.getString($defaultOnError, "andsDoi", "doiProperty"))
+                #set ($doi = $util.getMetadata($object, $doiProperty))
+                ## Use the DOI by preference for a citation
+                #if ("$!doi" != "")
+                    #set ($citeId = "http://dx.doi.org/${doi}")
+                    #set ($citeIdType = "doi")
+                    <rif:identifier type="uri">$util.encodeXml($citeId)</rif:identifier>
+                #end
+            #end
+
+
+
             <rif:name type="primary" $lang>
                 <rif:namePart>$util.encodeXml($util.get($item, "dc:title"))</rif:namePart>
             </rif:name>
@@ -331,8 +352,7 @@
         #showRelatedInfo("dc:relation.swrc:Publication", "publication", "uri")
         #showRelatedInfo("dc:relation.bibo:Website", "website", "uri")
         #showRelatedInfo("dc:relation.vivo:Service", "service", "uri")
-       ##showRelatedObject("dc:relation.vivo:Service", "service", "local")
- 
+        #showRelatedObject("dc:relation.vivo:Service", "service", "local")
         #set($showCitation = $util.get($item, "dc:biblioGraphicCitation.redbox:sendCitation"))
         #if ("$!showCitation" != "" && $showCitation == "on")
             #set($doiProperty = $systemConfig.getString($defaultOnError, "andsDoi", "doiProperty"))
