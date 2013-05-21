@@ -1074,6 +1074,11 @@
         "delimiter":";",
         "rolePlugins":["SimpleShibbolethRoleManager"],
         "SimpleShibbolethRoleManager":{
+            "guest":[
+                [
+                    ["homeOrganization", "is", "deakin.edu.au"]
+                ]
+            ],
             "researcher":[
                 [
                     ["homeOrganization", "is", "deakin.edu.au"]
