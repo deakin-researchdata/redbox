@@ -16,7 +16,7 @@
                 "to-workflow-id": "dataset",
                 "to-workflow-stage": "final-review",
                 "to-workflow-page-title": "Metadata Record",
-         		"to-workflow-label": "Metadata Review"
+         		"to-workflow-label": "Final Review"
             }           
         ]
     },
