@@ -1012,7 +1012,7 @@
             },
             {
                 "field-name": "dc:extent",
-                "label": "Extent or Quantity"
+                "label": "Extent of Collection"
             },
             {
                 "field-name": "redbox:disposalDate",
