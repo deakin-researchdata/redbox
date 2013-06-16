@@ -384,6 +384,7 @@ div.meta ol, div.meta ul {
 
 .component-wrapper .grant-description{
 	width:400px;
+    display: block ;
 }
 
 .simple-workflow.component-wrapper > label {
@@ -433,3 +434,10 @@ button.anzsrcSelection {
 	padding-right: 5px;
 }
 
+
+#simpleworkflow-form .component-wrapper input[type=text] ,
+#simpleworkflow-form .component-wrapper textarea ,
+#simpleworkflow-form .component-wrapper select
+{
+    width: 400px;
+}
