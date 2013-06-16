@@ -81,12 +81,15 @@ function manage_access(e) {
 		<p class="loading-data">#displayMessage('dmpt.text.noPDF')</p>
 	#end
 	</div>
+<!-- HIDE THIS SECTION AS ALL SCREENS ARE MERGED INTO ONE WORKFLOW
     <table>
     <tr><td><a href="$portalPath/workflow/$oid?flow=dataStructure">#displayMessage('dmpt.heading.dataCollection')</a></td><td>#if($self.getObjectMetaProperty("dataStructureComplete") == true)Completed #else Not completed #end</td></tr>
     <tr><td><a href="$portalPath/workflow/$oid?flow=dataAccess">#displayMessage('dmpt.heading.dataLicensing')</a></td><td>#if($self.getObjectMetaProperty("dataAccessComplete") == true)Completed #else Not completed #end</td></tr>
     <tr><td><a href="$portalPath/workflow/$oid?flow=dataRetention">#displayMessage('dmpt.heading.dataRetention')</a></td><td>#if($self.getObjectMetaProperty("dataRetentionComplete") == true)Completed #else Not completed #end</td></tr>
     </table>
     <p>You can add information to your plan to assist us in working with you to manage your research data.</p>
+-->
+<hr/>
 </div>
 
 <div id="toggle-accordion" class="toggle-accordion">
@@ -144,7 +147,7 @@ $(function(){
 <h1 style="margin-top:1.5em">Datasets</h1>
 #parseTemplate("home/dmpt/mydatasets.vm")
 <p style="margin-bottom: 0px;">
-Add more dataset:
+Create a new dataset:
 	<a id='create-selfsubmission' href='#'><img src="$portalPath/images/icons/package_add.png" alt="Create a dataset based on this plan"/></a>
 </p>
 
