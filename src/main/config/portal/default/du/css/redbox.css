@@ -441,3 +441,8 @@ button.anzsrcSelection {
 {
     width: 400px;
 }
+
+.people-field
+{
+    width: 120px !important;
+}
