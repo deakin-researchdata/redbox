@@ -1,5 +1,5 @@
 body {
-    font-size: 75%;
+    font-size: 75% !important;
     min-width: 960px
 }
 
