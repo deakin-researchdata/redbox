@@ -30,6 +30,7 @@
     <dir.solr>${project.home}/solr</dir.solr>
     <dir.storage>${project.home}/storage</dir.storage>
     <smtp.host>localhost</smtp.host>
+    <smtp.port>25</smtp.port>
     <admin.email>admin@localhost</admin.email>
     <packaging>pom</packaging>
     <shib.version>0.0.1-SNAPSHOT</shib.version>
