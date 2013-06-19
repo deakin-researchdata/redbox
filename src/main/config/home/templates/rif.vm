@@ -141,7 +141,13 @@
             xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.3/schema/registryObjects.xsd">
     <rif:registryObject group="$util.encodeXml($group)">
 
+        ##For DRO DU handler, using full URL as a key
+        #if ("$!identifier" != "" && $identifier.startsWith("DU"))
+        <rif:key>http://dro.deakin.edu.au/view/$identifier</rif:key>
+        #else
         <rif:key>$identifier</rif:key>
+        #end
+
         <rif:originatingSource>$urlBase</rif:originatingSource>
 
         #set($dateModified = "")
@@ -173,7 +179,13 @@
         ##  http://services.ands.org.au/documentation/rifcs/1.3/schemadocs/registryObjects.html
         #################
         <rif:collection type="$util.get($item, "dc:type.rdf:PlainLiteral")" $dateModified $dateAccessioned>
+
+            ##Mapping from DU handler to handler.org handler
+            #if ("$!identifierType" == "handle" )
+            <rif:identifier type="$identifierType">10536/DRO/$identifier</rif:identifier>
+            #else
             <rif:identifier type="$identifierType">$identifier</rif:identifier>
+            #end
 
  
             ## Output DRO Uri as an identifier
