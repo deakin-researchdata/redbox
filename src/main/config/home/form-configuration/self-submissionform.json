@@ -104,7 +104,7 @@
         									"validation-id": "dc:extent",
         									"focus-id": "dc:extent",
         									 "validation-messages":{
-        									 						"required": "Extent or quantity is required"
+        									 						"required": "Extent of collection is required"
         									 						}
     						 			  }      
                       
@@ -192,7 +192,9 @@
                             "box-for": "",
                             "boxes": [
                                 {
-                                    "label": "self-submission.field.label.dc-identifier.redboxdmpt-doirequest",
+                                    "label": "",
+                                    "checked":"yes",
+                                    "additional-classes":"jaffa-field-hidden",
                                     "value": "Yes"
                                 }
                             ]
@@ -403,7 +405,7 @@
                                 "validation-id": "dc:creator.foaf:Person.dc:identifier",
                                 "focus-id": "dc:creator.foaf:Person.foaf:title",
                                 "validation-messages": {
-                                    "required": "Principal investigator is required"
+                                    "required": "Chief investigator is required"
                                 }
                             }
                         },
@@ -567,17 +569,7 @@
                         {
                             "component-type": "text-input",
                             "label": "self-submission.field.label.dc-accessRights.dc-RightsStatement.dc-identifier",
-                            "field-name": "dc:accessRights.dc:RightsStatement.dc:identifier",                           
-                            "validation": {
-        									"save-rules": [
-            									"required"
-        									],
-        									"validation-id": "dc:accessRights.dc:RightsStatement.dc:identifier",
-        									"focus-id": "dc:accessRights.dc:RightsStatement.dc:identifier",
-        									 "validation-messages":{
-        									 						"required": "Access Rights url is required"
-        									 						}
-    						 			  }      
+                            "field-name": "dc:accessRights.dc:RightsStatement.dc:identifier"
                             
                         },
                         {
@@ -609,16 +601,6 @@
                             "component-type": "text-input",
                             "label": "self-submission.field.label.dc-accessRights.dc-identifier",
                             "field-name": "dc:accessRights.dc:identifier",
-                            "validation":{
-        									"save-rules": [
-            									"required"
-        									],
-        									"validation-id": "dc:accessRights.dc:identifier",
-        									"focus-id": "dc:accessRights.dc:identifier",
-        									 "validation-messages":{
-        									 						"required": "Access Conditions url is required"
-        									 						}
-    						 			  }    
                         },
                         {
                             "component-type": "native-html",
@@ -837,6 +819,58 @@
                                             | <a class='clear-link' href='#'>clear</a>
                                         </div>"
                         },
+                        {
+                            "component-type": "text-block",
+                            "type": "h3",
+                            "content": "self-submission.field.label.relation-publication",
+                            "help": "self-submission.field.help.relation-publication"
+                        },
+                        {
+                            "component-type": "repeatable-container",
+                            "containter-for": "dc:relation.swrc:Publication",
+                            "sub-elements":{
+                                "settings":[
+                                               {"jaffaText":{"label":"URL", "class-list": "jaffa-field", "suffix":"dc:identifier"}},
+                                               {"jaffaText":{"label":"Title", "class-list": "jaffa-field", "suffix":"dc:title"}},
+                                               {"jaffaText":{"label":"Notes", "class-list": "jaffa-field", "suffix":"skos:note"}}
+                                           ]}
+ 
+                        },
+                        {
+                            "component-type": "text-block",
+                            "type": "h3",
+                            "content": "self-submission.field.label.relation-website",
+                            "help": "self-submission.field.help.relation-website"
+                        },
+                        {
+                            "component-type": "repeatable-container",
+                            "containter-for": "dc:relation.bibo:Website",
+                            "sub-elements":{
+                                "settings":[
+                                               {"jaffaText":{"label":"URL", "class-list": "jaffa-field", "suffix":"dc:identifier"}},
+                                               {"jaffaText":{"label":"Title", "class-list": "jaffa-field", "suffix":"dc:title"}},
+                                               {"jaffaText":{"label":"Notes", "class-list": "jaffa-field", "suffix":"skos:note"}}
+                                           ]}
+ 
+                        },
+                        {
+                            "component-type": "text-block",
+                            "type": "h3",
+                            "content": "self-submission.field.label.relation-data",
+                            "help": "self-submission.field.help.relation-data"
+                        },
+                        {
+                            "component-type": "repeatable-container",
+                            "containter-for": "dc:relation.vivo:Dataset",
+                            "sub-elements":{
+                                "settings":[
+                                               {"jaffaText":{"label":"URL", "class-list": "jaffa-field", "suffix":"dc:identifier"}},
+                                               {"jaffaText":{"label":"Title", "class-list": "jaffa-field", "suffix":"dc:title"}},
+                                               {"jaffaText":{"label":"Notes", "class-list": "jaffa-field", "suffix":"skos:note"}}
+                                           ]}
+ 
+                        },
+
                         {
                             "component-type": "transition-control",
                             "transitions": [
