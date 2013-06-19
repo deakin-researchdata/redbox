@@ -1,6 +1,10 @@
 {
     "steps": {
+        "Welcome": {
+            "Next": "Overview"
+        },
         "Overview": {
+            "Back": "Welcome",
             "Next": "Identifier"
         },
         "Identifier": {

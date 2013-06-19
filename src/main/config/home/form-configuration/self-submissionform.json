@@ -3,6 +3,24 @@
         "self-submission-draft": {
             "divs": [
                 {
+                    "heading":"Welcome",
+                    "fields":[
+                        {
+                            "component-type":"text-block",
+                            "type":"h2",
+                            "content":"self-submission.heading.welcome"
+                        },
+                        {
+                            "component-type":"paragraph",
+                            "content":"self-submission.welcome.paragraph1"
+                        },
+                        {
+                            "component-type":"transition-control",
+                            "transitions":[{"name":"Next", "form-submit-action":"save", "type": "button"}]
+                        }
+                    ]
+                },
+                {
                     "heading": "Overview",
                     "fields": [
                         {
@@ -148,14 +166,11 @@
                             "component-type":"grants",
                             "field-name":"foaf:fundedBy.vivo:Grant",
                             "label":""
-                        }
+                        },
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                {
-                                    "name": "Next", "form-submit-action":"save"
-                                    "type": "button"
-                                }
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -247,7 +262,7 @@
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                { "name": "Back", "type": "button" }, { "name": "Next" , "type": "button"}
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -358,7 +373,7 @@
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save" "type": "button"}
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -478,7 +493,7 @@
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save" "type": "button"}
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -655,7 +670,7 @@
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save" "type": "button"}
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -779,7 +794,7 @@
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save" "type": "button"}
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -874,7 +889,7 @@
                         {
                             "component-type": "transition-control",
                             "transitions": [
-                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save" "type": "button"}
+                                { "name": "Back", "type": "button"}, { "name": "Next", "form-submit-action":"save", "type": "button"}
                             ]
                         },
                         {
@@ -908,6 +923,12 @@
                             "component-type": "textarea",
                             "field-name": "skos:note.0.dc:description",
                             "label": "self-submission.field.label.skos-note",
+                            "content":""
+                        },
+                        {
+                            "component-type": "textarea",
+                            "field-name": "skos:note.1.dc:description",
+                            "label": "self-submission.field.label.contact-details",
                             "content":""
                         },
 						{
