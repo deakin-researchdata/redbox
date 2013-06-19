@@ -30,7 +30,7 @@
 						makes it easier on us
 						-->
 					<li>
-                        <a href="#" style="padding-bottom: 15px;">Deakin Research Data Footprints</a>
+                        <a href="#" style="padding-bottom: 15px;"><span style="color:white !important;">Deakin Research Data Footprints</span></a>
 					</li>
 				</ul>
 			</div>
