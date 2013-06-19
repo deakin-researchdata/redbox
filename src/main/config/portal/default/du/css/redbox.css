@@ -446,3 +446,8 @@ button.anzsrcSelection {
 {
     width: 120px !important;
 }
+
+.jaffa-field-hidden
+{
+    display:none ;
+}
