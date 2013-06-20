@@ -102,7 +102,7 @@
 
 
     #if ("$!nameID" != "")
-	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="$util.encodeXml($nla_number)">
+	<mods:name ID="$nameID" authority="research-data.deakin.edu.au" type="$util.encodeXml($nla_number)">
 		<mods:namePart type="personal">$util.encodeXml($node.get("foaf:name"))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
@@ -231,6 +231,25 @@
     #end
 
     </mods:location>
+
+    ## Grants Data 
+    #set($valueMap = $util.getList($item, "foaf:fundedBy.vivo:Grant"))
+    #foreach($key in $valueMap.keySet())
+    #set($grant_url = $valueMap.get($key).get("dc:identifier") )
+        #if ($grant_url.contains('purl'))
+            #if ($grant_url.toLowerCase().contains('arc'))
+                #set($grant_prefix = "ARC")
+            #end
+            #if ($grant_url.toLowerCase().contains('nhmrc'))
+                #set($grant_prefix = "NHMRC")
+            #end
+            #set($lastIndex = $grant_url.lastIndexOf('/') + 1 )
+            #set($grant_number = $grant_url.substring($lastIndex) )
+            <mods:identifier type="grant_id">$util.encodeXml($grant_prefix) $util.encodeXml($grant_number)</mods:identifier>
+        #else
+            <mods:identifier type="grant_id">DR $util.encodeXml($valueMap.get($key).get("redbox:grantNumber")) ($util.encodeXml($grant_url))</mods:identifier>
+        #end
+    #end
     </mods:relatedItem>
 
 
