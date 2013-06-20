@@ -15,6 +15,56 @@
                             "content":"self-submission.welcome.paragraph1"
                         },
                         {
+                            "component-type": "checkbox",
+                            "field-name": "self-submission.field.privacy.acknowledge",
+                            "box-for": "self-submission.field.help.privacy.acknowledge",
+                            "help": "",
+                            "boxes": [
+                                {
+                                    "label": "self-submission.label.privacy.acknowledge",
+                                    "additional-classes": "acknowledge-checkbox",                           
+                                    "value": "Yes"
+                                }
+                            ],
+ 
+                        },
+                        {
+                            "component-type": "native-html",
+                            "content": "
+<script language='javascript'>
+$(document).ready(function() {
+    var acknowledge_intervalId = window.setInterval(function() {
+        if(
+            $('.acknowledge-checkbox').length > 0 
+            && $('#tab-1').find('button[transition-name]').length > 0
+        ) {
+
+            $('.acknowledge-checkbox').on('change',function(){
+                $(this).trigger('validate-privaty-acknowledge');          
+            });
+
+            $('.acknowledge-checkbox').bind('validate-privaty-acknowledge', function(){
+                if($(this).is(':checked'))
+                {
+                    $('#tab-1').find('button[transition-name]').removeAttr('disabled');
+                }
+                else
+                {
+                    $('#tab-1').find('button[transition-name]').attr('disabled', 'disabled');
+                }
+            });
+
+            $('.acknowledge-checkbox').trigger('validate-privaty-acknowledge');
+            
+            window.clearInterval(acknowledge_intervalId); 
+        }
+    },500);    
+      
+});
+</script>
+                            "
+                        },
+                        {
                             "component-type":"transition-control",
                             "transitions":[{"name":"Next", "form-submit-action":"save", "type": "button"}]
                         }
