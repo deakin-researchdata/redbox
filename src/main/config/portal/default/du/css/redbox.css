@@ -89,6 +89,11 @@ ul.main li ul li.selected-view a {
     margin-bottom: 0;
 }
 
+ul.ui-autocomplete
+{
+    width: 90% !important;
+}
+
 table.meta, table.meta tbody {
     margin-top: 0;
     width: 100%;
