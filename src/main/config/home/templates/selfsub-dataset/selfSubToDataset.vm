@@ -260,12 +260,10 @@
 	#if ($cList.size() > 0)
 	#foreach($key in $cList.keySet())
     	#set($slot = $cList.get($key))
-	#set($noteValue = $util.get($item, "skos:note.0.dc:description"))
-    #if ("$!noteValue" != "") 
-             "skos:note.${key}.dc:description": "$!noteValue",
-     "skos:note.1.dc:description": "$!noteValue",
-     "skos:note.1.dc:created": "1970-01-01 00:00:00",
-     "skos:note.1.foaf:name": "Self-submission User"
+        #set($noteValue = $slot.get("dc.description") )
+        "skos:note.${key}.dc:description": "$!noteValue",
+        "skos:note.${key}.dc:created": "1970-01-01 00:00:00",
+        "skos:note.${key}.foaf:name": "Self-submission User",
     #end
     #end
 
@@ -379,12 +377,14 @@
         "dc:Policy",
         "redbox:ManagementPlan.redbox:hasPlan",
         "redbox:ManagementPlan.skos:note",
-        "skos:note.1.dc:created",
-        "skos:note.1.foaf:name",
-        "skos:note.1.dc:description",
-        "skos:note.2.dc:created",
-        "skos:note.2.foaf:name",
-        "skos:note.2.dc:description",
+	#set($cList = $util.getList($item, "skos:note"))
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+        "skos:note.${key}.dc:created",
+        "skos:note.${key}.foaf:name",
+        "skos:note.${key}.dc:description",
+    #end
+    #end
         "dc:biblioGraphicCitation.skos:prefLabel",
         "dc:biblioGraphicCitation.redbox:sendCitation",
         "dc:biblioGraphicCitation.dc:hasPart.dc:identifier.skos:note",

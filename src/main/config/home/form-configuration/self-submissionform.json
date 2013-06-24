@@ -278,7 +278,7 @@ $(document).ready(function() {
                         },
                         {
                             "component-type": "text-input",
-                            "field-name": "skos:note.3.dc:description",
+                            "field-name": "skos:note.2.dc:description",
                             "label": "self-submission.field.label.dc-identifier.rdf-PlainLiteral.note",
                             "additional-classes": ""
                         },
