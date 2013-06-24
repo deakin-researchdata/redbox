@@ -541,11 +541,19 @@
 					  "timing": "0 0/5 * * * ?"
 					},
                     {
-                        "name": "process-set-notifyNewRecords",
+                        "name": "process-notify-collection-submitted",
                         "type": "external",
-                        "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=notifyNewRecords",
+                        "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=collection-submitted",
+                        "timing": "0 0/5 * * * ?"
+                    },
+                    {
+                        "name": "process-notify-listed-collection-submitted",
+                        "type": "external",
+                        "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=listed-collection-submitted",
                         "timing": "0 0/5 * * * ?"
                     }                
+
+
 				 ]
             }
         },
