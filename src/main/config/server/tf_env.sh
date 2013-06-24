@@ -11,6 +11,7 @@ export AMQ_STOMP_PORT="${amq.stomp.port}"
 export SMTP_HOST="${smtp.host}"
 export SMTP_PORT="${smtp.port}"
 export ADMIN_EMAIL="${admin.email}"
+export NOTIFICATION_SENDER="${notification.sender}"
 export MINT_SERVER="${mint.proxy.server}"
 export MINT_AMQ="${mint.amq.broker}"
 export NON_PROXY_HOSTS="${non.proxy.hosts}"
@@ -34,7 +35,7 @@ export DOI_KEY="${doi.key}"
 export CLASSPATH="plugins/*:lib/*"
 
 # Deakin specific settings
-DEAKIN_OPTS="-Ddro.server=$DRO_SERVER -Ddro.username=$DRO_USERNAME -Ddro.password=$DRO_PASSWORD -Ddro.namespace=$DRO_NAMESPACE -Ddro.handler=$DRO_HANDLER -Ddro.subset=$DRO_SUBSET -Ddoi.key=$DOI_KEY"
+DEAKIN_OPTS="-Ddro.server=$DRO_SERVER -Ddro.username=$DRO_USERNAME -Ddro.password=$DRO_PASSWORD -Ddro.namespace=$DRO_NAMESPACE -Ddro.handler=$DRO_HANDLER -Ddro.subset=$DRO_SUBSET -Ddoi.key=$DOI_KEY -Dnotification.sender=$NOTIFICATION_SENDER "
 
 # jvm memory settings
 JVM_OPTS="-XX:MaxPermSize=512m -Xmx512m"

@@ -5,7 +5,7 @@
     "password":"",
     "tls":"false",
     "ssl":"false",
-    "from":"${admin.email}",
+    "from":"${notification.sender}",
     "to": "neil.fan@deakin.edu.au",
     "subject":"New ReDBox record added: '$title'",
     "body":"Dear User $piEmail,\n\nThis is a notification of a newly created record: '$title' on $createTime. \n\n ${server.url.base}$viewId/detail/$oid \n\nCheers,\nEmailNotifier",
