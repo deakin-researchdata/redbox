@@ -135,17 +135,6 @@
         "mintBroker": "${mint.amq.broker}",
 
         "relations": {
-            "dc:relation.vivo:Dataset.0.dc:identifier": {
-                "path": ["dc:relation", "vivo:Dataset"],
-                "identifier": ["dc:identifier"],
-                "relationship": ["vivo:Relationship", "rdf:PlainLiteral"],
-                "excludeCondition": {
-                    "path": ["redbox:publish"],
-                    "value": ""
-                },
-                "system": "redbox",
-                "optional": true
-            },
             "dc:creator.foaf:Person.0.dc:identifier": {
                 "path": ["dc:creator", "foaf:Person"],
                 "identifier": ["dc:identifier"],
@@ -179,15 +168,6 @@
                 "path": ["foaf:Organization"],
                 "identifier": ["dc:identifier"],
                 "relationship": "isManagedBy"
-            },
-            "foaf:fundedBy.vivo:Grant.0.dc:identifier": {
-                "path": ["foaf:fundedBy", "vivo:Grant"],
-                "identifier": ["dc:identifier"],
-                "relationship": "isOutputOf",
-                "excludeCondition": {
-                    "path": ["redbox:internalGrant"],
-                    "value": "on"
-                }
             }
         },
         "reverseMappings": {
