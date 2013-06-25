@@ -128,10 +128,13 @@
 	#mapTo('dc:creator.foaf:Person.foaf:title', 'dc:creator.foaf:Person.1.foaf:title')
 	#mapTo('dc:creator.foaf:Person.foaf:givenName', 'dc:creator.foaf:Person.1.foaf:givenName')
 	#mapTo('dc:creator.foaf:Person.foaf:familyName', 'dc:creator.foaf:Person.1.foaf:familyName')
+	#mapTo('dc:creator.foaf:Person.foaf:email', 'dc:creator.foaf:Person.1.foaf:email')
 	#mapTo('dc:creator.foaf:Person.dc:identifier', 'dc:creator.foaf:Person.1.dc:identifier')
 	#set($ciFamilyName = $util.get($item, "dc:creator.foaf:Person.foaf:familyName"))
 	#set($ciGivenName = $util.get($item, "dc:creator.foaf:Person.foaf:givenName"))
+	#set($ciEmail = $util.get($item, "dc:creator.foaf:Person.foaf:email"))
 	"dc:creator.foaf:Person.1.foaf:name": "$ciFamilyName, $ciGivenName",
+	"dc:creator.foaf:Person.1.foaf:fullEmail": "$ciFamilyName $ciGivenName<$ciEmail>",
 	"dc:creator.foaf:Person.1.redbox:isPrimaryInvestigator": "on",
 	
 	#set($cList = $util.getList($item, "dc:contributor.locrel:clb"))
@@ -143,13 +146,16 @@
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:title"  "foaf:title" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:givenName" "foaf:givenName" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:familyName" "foaf:familyName" $order)
+    	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:email" "foaf:email" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.dc:identifier" "dc:identifier" $order)
     	
 		#set($familyNameValue = $slot.get("foaf:Agent.foaf:familyName"))
 		#set($givenNameValue = $slot.get("foaf:Agent.foaf:givenName"))
+		#set($emailValue = $slot.get("foaf:Agent.foaf:email"))
 		#if ("$!familyNameValue" != "") 
 			"dc:creator.foaf:Person.${order}.foaf:name": "$familyNameValue, $givenNameValue",
 		#end
+			"dc:creator.foaf:Person.${order}.foaf:fullEmail": "$familyNameValue $givenNameValue<$emailValue>",
     	#set($order = $order + 1)
     #end
 	#end
@@ -157,11 +163,14 @@
 	#mapTo('swrc:supervisor.foaf:Person.foaf:title', 'swrc:supervisor.foaf:Person.1.foaf:title')
 	#mapTo('swrc:supervisor.foaf:Person.foaf:givenName', 'swrc:supervisor.foaf:Person.1.foaf:givenName')
 	#mapTo('swrc:supervisor.foaf:Person.foaf:familyName', 'swrc:supervisor.foaf:Person.1.foaf:familyName')
+	#mapTo('swrc:supervisor.foaf:Person.foaf:email', 'swrc:supervisor.foaf:Person.1.foaf:email')
 	#mapTo('swrc:supervisor.foaf:Person.dc:identifier', 'swrc:supervisor.foaf:Person.1.dc:identifier')
 	#set($supFamilyName = $util.get($item, "swrc:supervisor.foaf:Person.foaf:familyName"))
 	#set($supGivenName = $util.get($item, "swrc:supervisor.foaf:Person.foaf:givenName"))
+	#set($supEmail = $util.get($item, "swrc:supervisor.foaf:Person.foaf:email"))
 	#if ("$!supFamilyName" != "") 
 		"swrc:supervisor.foaf:Person.1.foaf:name": "$supFamilyName, $supGivenName",
+		"swrc:supervisor.foaf:Person.1.foaf:fullEmail": "$supFamilyName $supGivenName<$supEmail>",
 	#end
 
 	
@@ -322,6 +331,8 @@
         "dc:creator.foaf:Person.1.redbox:isPrimaryInvestigator",
         "dc:creator.foaf:Person.1.foaf:givenName",
         "dc:creator.foaf:Person.1.foaf:familyName",
+        "dc:creator.foaf:Person.1.foaf:email",
+        "dc:creator.foaf:Person.1.foaf:fullEmail",
         "dc:creator.foaf:Person.1.foaf:Organization.dc:identifier",
         "dc:creator.foaf:Person.1.foaf:Organization.skos:prefLabel",
         "locrel:prc.foaf:Person.dc:identifier",
@@ -330,17 +341,43 @@
         "locrel:prc.foaf:Person.foaf:givenName",
         "locrel:prc.foaf:Person.foaf:familyName",
         "locrel:prc.foaf:Person.foaf:email",
+        "locrel:prc.foaf:Person.foaf:fullEmail",
         "swrc:supervisor.foaf:Person.1.dc:identifier",
         "swrc:supervisor.foaf:Person.1.foaf:name",
         "swrc:supervisor.foaf:Person.1.foaf:title",
         "swrc:supervisor.foaf:Person.1.foaf:givenName",
         "swrc:supervisor.foaf:Person.1.foaf:familyName",
+        "swrc:supervisor.foaf:Person.1.foaf:email",
+        "swrc:supervisor.foaf:Person.1.foaf:fullEmail",
         "dc:contributor.locrel:clb.1.foaf:Agent",
         "dc:subject.anzsrc:seo.1.skos:prefLabel",
         "dc:subject.anzsrc:seo.1.rdf:resource",
         "dc:subject.anzsrc:for.1.skos:prefLabel",
         "dc:subject.anzsrc:for.1.rdf:resource",
         "dc:subject.vivo:keyword.1.rdf:PlainLiteral",
+	
+	#set($cList = $util.getList($item, "dc:contributor.locrel:clb"))
+	#set($order = 2)
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+    	#set($slot = $cList.get($key))
+    	
+    	"dc:creator.foaf:Person.$order.foaf:title",
+    	"dc:creator.foaf:Person.$order.foaf:givenName",
+    	"dc:creator.foaf:Person.$order.foaf:familyName",
+    	"dc:creator.foaf:Person.$order.foaf:email",
+    	"dc:creator.foaf:Person.$order.foaf:fullEmail",
+    	"dc:creator.foaf:Person.$order.dc:identifier",
+    	
+		#set($familyNameValue = $slot.get("foaf:Agent.foaf:familyName"))
+		#set($givenNameValue = $slot.get("foaf:Agent.foaf:givenName"))
+		#if ("$!familyNameValue" != "") 
+			"dc:creator.foaf:Person.${order}.foaf:name",
+		#end
+    	#set($order = $order + 1)
+    #end
+	#end
+
         "dc:subject.anzsrc:toa.rdf:resource",
         "dc:subject.anzsrc:toa.skos:prefLabel",
         "dc:accessRights.skos:prefLabel",
