@@ -6,9 +6,9 @@
     "tls":"false",
     "ssl":"false",
     "from":"${notification.sender}",
-    "to": "neil.fan@deakin.edu.au",
+    "to": "$_owner_email",
     "subject":"New Footprints Record Added: '$title'",
-    "body":"Dear $_owner_name,<p>Thank you for your contribution to Deakin Research Data Footprints.<p> Your following data collection description has been submitted for publication to <a href='http://dro.deakin.edu.au/'>Deakin Research Online</a> (DRO) and <a href='http://researchdata.ands.org.au'>Research Data Australia</a> (RDA): <p> $title <p> Your data description will now be reviewed by DRO staff and your identification matched with the National Library. You will be contacted if any further information is required. <p> The review process will take approximately 7-10 days, you will be notified once the record is finalised.<p> If you have any queries regarding the review process please contact DRO staff at <a href='mailto:drosupport@deakin.edu.au'>drosupport@deakin.edu.au</a>, tel: 03 52272700 or your <a href='http://www.deakin.edu.au/library/about/liaison-librarians.php#about'>Liaison Librarian</a>.<p> Kind Regards, <p> Deakin eResearch<p> <strong>Please do not reply to this email.</strong>",
+    "body":"Dear $_owner_name,<p>Thank you for your contribution to Deakin Research Data Footprints.<p> Your following data collection description has been submitted for publication to <a href='http://dro.deakin.edu.au/'>Deakin Research Online</a> (DRO) and <a href='http://researchdata.ands.org.au'>Research Data Australia</a> (RDA): <p> <a href='${server.url.base}/dashboard/detail/$oid/'>$title</a> <p> Your data description will now be reviewed by DRO staff and your identification matched with the National Library. You will be contacted if any further information is required. <p> The review process will take approximately 7-10 days, you will be notified once the record is finalised.<p> If you have any queries regarding the review process please contact DRO staff at <a href='mailto:drosupport@deakin.edu.au'>drosupport@deakin.edu.au</a>, tel: 03 52272700 or your <a href='http://www.deakin.edu.au/library/about/liaison-librarians.php#about'>Liaison Librarian</a>.<p> Kind Regards, <p> Deakin eResearch<p> <strong>Please do not reply to this email.</strong>",
     "vars":[
         "$oid",
         "$title",

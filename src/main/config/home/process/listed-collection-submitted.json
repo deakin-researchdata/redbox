@@ -6,23 +6,37 @@
     "tls":"false",
     "ssl":"false",
     "from":"${notification.sender}",
-    "to": "neil.fan@deakin.edu.au",
+    "to": "$email00,$email01,$email02,$email03,$email04,$email05,$email06,$email07,$email08,$email09",
     "subject":"New Footprints Record Added: '$title'",
-    "body":"Dear $_owner_name,<p>Thank you for your contribution to Deakin Research Data Footprints.<p> Your following data collection description has been submitted for publication to <a href='http://dro.deakin.edu.au/'>Deakin Research Online</a> (DRO) and <a href='http://researchdata.ands.org.au'>Research Data Australia</a> (RDA): <p> $title <p> Your data description will now be reviewed by DRO staff and your identification matched with the National Library. You will be contacted if any further information is required. <p> The review process will take approximately 7-10 days, you will be notified once the record is finalised.<p> If you have any queries regarding the review process please contact DRO staff at <a href='mailto:drosupport@deakin.edu.au'>drosupport@deakin.edu.au</a>, tel: 03 52272700 or your <a href='http://www.deakin.edu.au/library/about/liaison-librarians.php#about'>Liaison Librarian</a>.<p> Kind Regards, <p> Deakin eResearch<p> <strong>Please do not reply to this email.</strong>",
+    "body":"Dear #REC_NAME #REC_EMAIL,<p> The following data collection description has been submitted for review and publication to <a href='http://dro.deakin.edu.au/'>Deakin Research Online</a> (DRO) and <a href='http://researchdata.ands.org.au'>Research Data Australia</a> (RDA) by $_owner_name ($_owner_email), and you have been listed as a party on the record: <p> <a href='${server.url.base}/dashboard/detail/$oid/'>$title</a> <p> The submission will now be reviewed by DRO staff and your identification matched with the National Library records. <p> If you would like any information regarding Research Data Management at Deakin and the publication of data collection descriptions please visit the <a href='http://deakin.edu.au/research/eresearch/manage-data/'>Manage Research Data website</a>. If you have any concerns regarding the record submitted please contact DRO staff at <a href='mailto:drosupport@deakin.edu.au'>drosupport@deakin.edu.au</a>, tel: 03 52272700 or your <a href='http://www.deakin.edu.au/library/about/liaison-librarians.php#about'>Liaison Librarian</a>. <p> Kind Regards, <p> Deakin eResearch <p> <strong>Please do not reply to this email.</strong>",
     "vars":[
         "$oid",
         "$title",
-        "$createTime",
-        "$viewId",
-        "$piEmail",
         "$_owner_name",
-        "$_owner_email"
+        "$_owner_email",
+        "$email00",
+        "$email01",
+        "$email02",
+        "$email03",
+        "$email04",
+        "$email05",
+        "$email06",
+        "$email07",
+        "$email08",
+        "$email09"
     ],
     "mapping": {
         "$oid":"id",
         "$title":"dc_title",
-        "$createTime":"create_timestamp",
-        "$viewId":"viewId",
-        "$piEmail":"locrel:rth.foaf:Person.foaf:email"
+        "$email00":"swrc:supervisor.foaf:Person.1.foaf:fullEmail",
+        "$email01":"dc:creator.foaf:Person.1.foaf:fullEmail",
+        "$email02":"dc:creator.foaf:Person.2.foaf:fullEmail",
+        "$email03":"dc:creator.foaf:Person.3.foaf:fullEmail",
+        "$email04":"dc:creator.foaf:Person.4.foaf:fullEmail",
+        "$email05":"dc:creator.foaf:Person.5.foaf:fullEmail",
+        "$email06":"dc:creator.foaf:Person.6.foaf:fullEmail",
+        "$email07":"dc:creator.foaf:Person.7.foaf:fullEmail",
+        "$email08":"dc:creator.foaf:Person.8.foaf:fullEmail",
+        "$email09":"dc:creator.foaf:Person.9.foaf:fullEmail"
     }
 }
