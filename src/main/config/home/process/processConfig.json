@@ -108,11 +108,11 @@
         ]
     },
     {
-        "id":"collectino-published",
+        "id":"collection-published",
         "pre" : [
             {   
                 "class":"com.googlecode.fascinator.portal.process.NewRecordProcessor",
-                "config":"${fascinator.home}/process/newRecords-collectino-published.json",
+                "config":"${fascinator.home}/process/newRecords-collection-published.json",
                 "inputKey":"",
                 "outputKey":"newOids"
             }
@@ -120,7 +120,7 @@
         "process" : [
             {   
                 "class":"com.googlecode.fascinator.portal.process.EmailNotifier",
-                "config":"${fascinator.home}/process/collectino-published.json",
+                "config":"${fascinator.home}/process/collection-published.json",
                 "inputKey":"newOids",
                 "outputKey":"failedOids"
             }
@@ -128,7 +128,7 @@
         "post" : [
             {   
                 "class":"com.googlecode.fascinator.portal.process.NewRecordProcessor",
-                "config":"${fascinator.home}/process/newRecords-collectino-published.json",
+                "config":"${fascinator.home}/process/newRecords-collection-published.json",
                 "inputKey":"failedOids",
                 "outputKey":""
             }
