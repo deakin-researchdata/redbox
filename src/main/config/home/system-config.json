@@ -531,9 +531,19 @@
                         "type": "external",
                         "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=listed-collection-submitted",
                         "timing": "0 0/5 * * * ?"
-                    }                
-
-
+                    },
+                    {
+                        "name": "process-notify-collection-ready-for-review",
+                        "type": "external",
+                        "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=collection-ready-for-review",
+                        "timing": "0 0/5 * * * ?"
+                    },
+                    {
+                        "name": "process-notify-collectino-published",
+                        "type": "external",
+                        "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=collection-published",
+                        "timing": "0 0/5 * * * ?"
+                    }
 				 ]
             }
         },
@@ -1090,6 +1100,25 @@
                     ["accessgroup", "is", "acg-researchdata-admin"]
                 ]
             ]
+        }
+    },
+    "tim.notification":
+    {
+        "url": "${mint.proxy.url}/default/search/nlaUnmatched",
+        "email":
+        {
+            "testmode":"${smtp.testmode}",
+            "redirect":"${smtp.redirect}",
+            "host":"${smtp.host}",
+            "port":"${smtp.port}",
+            "username":"${smtp.username}",
+            "password":"${smtp.password}",
+            "tls":"${smtp.tls}",
+            "ssl":"${smtp.ssl}",
+            "from":"${notification.sender}",
+            "to": "${admin.email}",
+            "subject":"Action Needed for NLA Unmatched Party Records",
+            "body":"Dear Deakin Research,<p> There are researchers who have submitted a metadata record to Research Data Australia who require an NLA identifier.<p> Please login to Trove Identities Manager (TIM):<p> <a href='https://www.nla.gov.au/tim/app/;jsessionid=z5iwazn6d9in1upod4t8yn837?wicket:bookmarkablePage=:au.gov.nla.dataadmin.pages.LoginPage'>https://www.nla.gov.au/tim/app/;jsessionid=z5iwazn6d9in1upod4t8yn837?wicket:bookmarkablePage=:au.gov.nla.dataadmin.pages.LoginPage</a><p> Please complete this process within 1 week.<p> If you require information on how to use TIM, training guides are available on the <a href='http://ands.org.au/training/trove/#usingtim'>ANDS website</a>.<p> Kind Regards,<p> Deakin eResearch.<p> <strong>Please do not reply to this email.</strong>"
         }
     }
 }
