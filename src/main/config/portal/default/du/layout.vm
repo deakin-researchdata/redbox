@@ -1,0 +1,57 @@
+#if($noLayout)$!pageContent#else
+<!DOCTYPE html>
+<html>
+    <head>
+        #parseTemplate("layout/html-head.vm")
+        <script language="javascript">
+
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime()+(days*24*60*60*1000));
+                var expires = "; expires="+date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        function eraseCookie(name) {
+            createCookie(name,"",-1);
+        }
+
+        if(location.href.indexOf("disable_default_view")>-1)
+        {
+            eraseCookie("enable_default_view") ;
+        }
+
+        if(location.href.indexOf("enable_default_view")>-1)
+        {
+            createCookie("enable_default_view", "yes") ;
+        }
+
+        if(location.href.indexOf("dashboard")==-1 && readCookie("enable_default_view")!="yes")
+        {
+            location.href="/footprints/dashboard/";
+        }
+
+        </script>
+    </head>
+    <body>
+        #parseTemplate("layout/jquery-settings.vm")
+        #parseTemplate("layout/page-structure.vm")
+        #parseTemplate("layout/action-form.vm")
+    </body>
+</html>
+#end
+
