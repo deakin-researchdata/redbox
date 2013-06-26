@@ -878,6 +878,12 @@
                         {
                             "component-type":"text-block",
                             "type":"h1",
+                            "content":"dmpt.heading.EthicsSensitivities"
+                        },
+
+                        {
+                            "component-type":"text-block",
+                            "type":"h2",
                             "content":"dmpt.heading.EthicsSensitivities.ethics"
                         },
                         {
@@ -906,7 +912,7 @@
                         },
                         {
                             "component-type":"text-block",
-                            "type":"h3",
+                            "type":"h2",
                             "content":"dmpt.heading.EthicsSensitivities.sensitivities"
                         },
                         {
