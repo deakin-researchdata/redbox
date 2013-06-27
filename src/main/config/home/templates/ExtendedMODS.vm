@@ -1,3 +1,7 @@
+#macro (_ $value)
+#if ("$!value" != "")$value#end				
+#end
+
 #set($dateFormat = "yyyy-MM-dd")
  
 #set ($langUri = $util.get($item, "dc:language.dc:identifier"))
@@ -13,7 +17,7 @@
 	## TITLE
 	## ReDBox gives only 1 name to the dataset
 	<mods:titleInfo>
-		<mods:title>$util.encodeXml($util.get($item, 'dc:title')).replaceAll("\n", " ")</mods:title>
+		<mods:title>#_($util.encodeXml($util.get($item, 'dc:title')).replaceAll("\n", " "))</mods:title>
 	</mods:titleInfo>
 
 	## CREATOR
@@ -48,11 +52,11 @@
 
 
     #if ("$!nameID" != "")
-	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="$util.encodeXml($nla_number)">
-		<mods:namePart type="personal">$util.encodeXml($node.get("foaf:name"))</mods:namePart>
+	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="#_($util.encodeXml($nla_number))">
+		<mods:namePart type="personal">#_($util.encodeXml($node.get("foaf:name")))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
-		<mods:affiliation>$util.encodeXml($affiliation)</mods:affiliation>
+		<mods:affiliation>#_($util.encodeXml($affiliation))</mods:affiliation>
 		#end
 		<mods:role>
 			<mods:roleTerm type="text">author</mods:roleTerm>
@@ -102,11 +106,11 @@
 
 
     #if ("$!nameID" != "")
-	<mods:name ID="$nameID" authority="research-data.deakin.edu.au" type="$util.encodeXml($nla_number)">
-		<mods:namePart type="personal">$util.encodeXml($node.get("foaf:name"))</mods:namePart>
+	<mods:name ID="$nameID" authority="research-data.deakin.edu.au" type="#_($util.encodeXml($nla_number))">
+		<mods:namePart type="personal">#_($util.encodeXml($node.get("foaf:name")))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
-		<mods:affiliation>$util.encodeXml($affiliation)</mods:affiliation>
+		<mods:affiliation>#_($util.encodeXml($affiliation))</mods:affiliation>
 		#end
 		<mods:role>
 			<mods:roleTerm type="text">editor</mods:roleTerm>
@@ -125,7 +129,7 @@
 		#set($affiliation = $node.get("foaf:Agent"))
 		#if($affiliation)
         <mods:name>
-            <mods:namePart type="corporate">$util.encodeXml($affiliation)</mods:namePart>
+            <mods:namePart type="corporate">#_($util.encodeXml($affiliation))</mods:namePart>
             <mods:displayForm>collaborator</mods:displayForm>
             <mods:role>
                 <mods:roleTerm type="text">associated name</mods:roleTerm>
@@ -138,7 +142,7 @@
 
     ## DRO requires this to be hardcoded
 	<mods:typeOfResource>dataset</mods:typeOfResource>
-	<mods:genre authority="ands">$util.get($item, 'dc:type.rdf:PlainLiteral')</mods:genre>
+	<mods:genre authority="ands">#_($util.get($item, 'dc:type.rdf:PlainLiteral'))</mods:genre>
 
 	<mods:originInfo>
 
@@ -151,32 +155,32 @@
         ## No Copy right date extracted
 		## <mods:copyrightDate>></mods:copyrightDate>
 
-		<mods:dateIssued>$util.getDateTime($util.get($item, 'dc:created'), $dateFormat)</mods:dateIssued>
+		<mods:dateIssued>#_($util.getDateTime($util.get($item, 'dc:created'), $dateFormat))</mods:dateIssued>
 
         ## No data valid date from ReDBox
 		## <mods:dateValid point="start"></mods:dateValid>
 		## <mods:dateValid point="end"></mods:dateValid>
 
         ## Data Coverage Dates
-		<mods:dateValid point="start">$util.getDateTime($util.get($item, 'dc:coverage.vivo:DateTimeInterval.vivo:start'), $dateFormat)</mods:dateValid>
-		<mods:dateValid point="end">$util.getDateTime($util.get($item, 'dc:coverage.vivo:DateTimeInterval.vivo:end'), $dateFormat)</mods:dateValid>
+		<mods:dateValid point="start">#_($util.getDateTime($util.get($item, 'dc:coverage.vivo:DateTimeInterval.vivo:start'), $dateFormat))</mods:dateValid>
+		<mods:dateValid point="end">#_($util.getDateTime($util.get($item, 'dc:coverage.vivo:DateTimeInterval.vivo:end'), $dateFormat))</mods:dateValid>
 		#if ($util.get($item, 'redbox:disposalDate'))
-		<mods:dateOther>$util.getDateTime($util.get($item, 'redbox:disposalDate'), $dateFormat)</mods:dateOther>
+		<mods:dateOther>#_($util.getDateTime($util.get($item, 'redbox:disposalDate'), $dateFormat))</mods:dateOther>
         #end
 	</mods:originInfo>
  
     <mods:language>
-        <mods:languageTerm authority="iso639-2b" type="code">$lang</mods:languageTerm>
+        <mods:languageTerm authority="iso639-2b" type="code">#_($lang)</mods:languageTerm>
     </mods:language>
 
 
     #set($abstract = $util.encodeXml($util.get($item, 'dc:description')))
-    <mods:abstract>$abstract.replaceAll("\n","<br/><br/>")</mods:abstract>
+    <mods:abstract>#_($abstract.replaceAll("\n","<br/><br/>"))</mods:abstract>
 
     <mods:physicalDescription>
         <mods:extent>
         #if ($util.get($item, 'dc:extent'))
-        $util.encodeXml($util.get($item, 'dc:extent'))
+        #_($util.encodeXml($util.get($item, 'dc:extent')))
         #end
         </mods:extent>
     </mods:physicalDescription>
@@ -185,7 +189,7 @@
     #set($valueMap = $util.getList($item, "dc:subject.vivo:keyword"))
     #foreach($key in $valueMap.keySet())
     <mods:subject  authority="keyword">
-        <mods:topic>$util.encodeXml($valueMap.get($key).get('rdf:PlainLiteral'))</mods:topic>
+        <mods:topic>#_($util.encodeXml($valueMap.get($key).get('rdf:PlainLiteral')))</mods:topic>
     </mods:subject>
     #end
 
@@ -194,7 +198,7 @@
     #foreach($key in $valueMap.keySet())
     <mods:subject  authority="anzsrc">
         #set($anzsrc = $valueMap.get($key).get('skos:prefLabel').replaceFirst(' - '," "))
-        <mods:topic>$util.encodeXml($anzsrc)</mods:topic>
+        <mods:topic>#_($util.encodeXml($anzsrc))</mods:topic>
     </mods:subject>
     #end
 
@@ -203,7 +207,7 @@
     #if ($util.get($item, 'dc:subject.anzsrc:seo.1.skos:prefLabel'))
     <mods:subject  authority="anzsrcseo">
         #set($anzsrcseo = $util.get($item, 'dc:subject.anzsrc:seo.1.skos:prefLabel').replaceFirst(' - '," "))
-        <mods:topic>$util.encodeXml($anzsrcseo)</mods:topic>
+        <mods:topic>#_($util.encodeXml($anzsrcseo))</mods:topic>
     </mods:subject>
     #end
 
@@ -215,19 +219,19 @@
 
     #set($valueMap = $util.getList($item, "dc:relation.swrc:Publication"))
     #foreach($key in $valueMap.keySet())
-        <mods:url displayLabel="$util.encodeXml($valueMap.get($key).get('dc:title'))">$util.encodeXml($valueMap.get($key).get('dc:identifier'))</mods:url>
+        <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
     #end
 
     ## Related Website 
     #set($valueMap = $util.getList($item, "dc:relation.bibo:Website"))
     #foreach($key in $valueMap.keySet())
-        <mods:url displayLabel="$util.encodeXml($valueMap.get($key).get('dc:title'))">$util.encodeXml($valueMap.get($key).get('dc:identifier'))</mods:url>
+        <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
     #end
 
     ## Related Data 
     #set($valueMap = $util.getList($item, "dc:relation.vivo:Dataset"))
     #foreach($key in $valueMap.keySet())
-        <mods:url displayLabel="$util.encodeXml($valueMap.get($key).get('dc:title'))">$util.encodeXml($valueMap.get($key).get('dc:identifier'))</mods:url>
+        <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
     #end
 
     </mods:location>
@@ -245,11 +249,11 @@
             #end
             #set($lastIndex = $grant_url.lastIndexOf('/') + 1 )
             #set($grant_number = $grant_url.substring($lastIndex) )
-            <mods:identifier type="grant_id">$util.encodeXml($grant_prefix) $util.encodeXml($grant_number)</mods:identifier>
+            <mods:identifier type="grant_id">#_($util.encodeXml($grant_prefix)) #_($util.encodeXml($grant_number))</mods:identifier>
         #else
             #set($grant_number = $valueMap.get($key).get("redbox:grantNumber") )
             #if ("$!grant_number" != "")
-            <mods:identifier type="grant_id">DR $util.encodeXml($grant_number) ($util.encodeXml($grant_url))</mods:identifier>
+            <mods:identifier type="grant_id">DR #_($util.encodeXml($grant_number)) (#_($util.encodeXml($grant_url)))</mods:identifier>
             #end
         #end
     #end
@@ -260,7 +264,7 @@
     ## IDENTIFIER
     #set ($id = $util.get($item, 'dc:identifier.rdf:PlainLiteral')) 
     #if ("$!id" != "")
-    $util.encodeXml($util.get($item, 'dc:identifier.dc:type.rdf:PlainLiteral')) | $util.encodeXml($id)
+    #_($util.encodeXml($util.get($item, 'dc:identifier.dc:type.rdf:PlainLiteral'))) | #_($util.encodeXml($id))
     #end
 
     ## LOCATION
@@ -268,7 +272,7 @@
     #foreach($key in $valueMap.keySet())
     #set ($valueLoc = $valueMap.get($key).get('dc:identifier'))
     #if ("$!valueLoc" != "")
-    $util.encodeXml($valueLoc)
+    #_($util.encodeXml($valueLoc))
     #end
     #end
  
@@ -277,54 +281,55 @@
     #foreach($key in $valueMap.keySet())
     #set ($note = $valueMap.get($key).get('dc:description')) 
     #if ("$!note" != "")
-    $util.encodeXml($note).replaceAll("\\n","<br/><br/>") [$util.encodeXml($valueMap.get($key).get('dc:created'))].
+    #_($util.encodeXml($note).replaceAll("\\n","<br/><br/>")) [#_($util.encodeXml($valueMap.get($key).get('dc:created')))].
     #end
     #end
 
     #if ($util.get($item, 'dc:SizeOrDuration'))
-    $util.encodeXml($util.get($item, 'dc:SizeOrDuration')).
+    #_($util.encodeXml($util.get($item, 'dc:SizeOrDuration'))).
     #end
+ 
     </mods:note>
 
 
     ## GEOGRAPHIC
     #set($valueMap = $util.getList($item, "dc:coverage.vivo:GeographicLocation"))
     #foreach($key in $valueMap.keySet())
-    <subject><geographic>$util.encodeXml($valueMap.get($key).get('gn:name'))</geographic></subject> 
+    <subject><geographic>#_($util.encodeXml($valueMap.get($key).get('gn:name')))</geographic></subject> 
     #end
 
 
     <mods:location>
-        <mods:physicalLocation>$util.encodeXml($util.get($item, 'vivo:Location.vivo:GeographicLocation.gn:name'))</mods:physicalLocation>
+        <mods:physicalLocation>#_($util.encodeXml($util.get($item, 'vivo:Location.vivo:GeographicLocation.gn:name')))</mods:physicalLocation>
     </mods:location>
 
     ## ACCESS CONDITION
-    <mods:accessCondition type="access">$util.encodeXml($util.get($item, 'dc:accessRights.rdf:PlainLiteral'))</mods:accessCondition>
+    <mods:accessCondition type="access">#_($util.encodeXml($util.get($item, 'dc:accessRights.rdf:PlainLiteral')))</mods:accessCondition>
 
-    <mods:accessCondition type="notice">$util.encodeXml($util.get($item, 'dc:accessRights.dc:RightsStatement'))</mods:accessCondition>
-    <mods:accessCondition type="clearance">$util.encodeXml($util.get($item, 'redbox:creativeCommonsLicense.skos:prefLabel'))</mods:accessCondition>
+    <mods:accessCondition type="notice">#_($util.encodeXml($util.get($item, 'dc:accessRights.dc:RightsStatement')))</mods:accessCondition>
+    <mods:accessCondition type="clearance">#_($util.encodeXml($util.get($item, 'redbox:creativeCommonsLicense.skos:prefLabel')))</mods:accessCondition>
 
-    <mods:accessCondition type="other_license">$util.encodeXml($util.get($item, 'dc:license.skos:prefLabel'))</mods:accessCondition>
+    <mods:accessCondition type="other_license">#_($util.encodeXml($util.get($item, 'dc:license.skos:prefLabel')))</mods:accessCondition>
     <mods:accessCondition type="data_owner">
     ## DATA OWNER
     #set($valueMap = $util.getList($item, "locrel:own.foaf:Agent"))
     #foreach($key in $valueMap.keySet())
-    $util.encodeXml($valueMap.get($key).get('foaf:name'))
+    #_($util.encodeXml($valueMap.get($key).get('foaf:name')))
     #end
     </mods:accessCondition>
 
-    <mods:accessCondition type="data_custodian">$util.encodeXml($util.get($item, 'locrel:dtm.foaf:Agent.foaf:name'))</mods:accessCondition>
+    <mods:accessCondition type="data_custodian">#_($util.encodeXml($util.get($item, 'locrel:dtm.foaf:Agent.foaf:name')))</mods:accessCondition>
  
     ## Primary Contact
     <mods:extension>
         #if ($util.get($item, 'locrel:prc.foaf:Person.foaf:email'))
         <mods:dudro-contact type="email">
-            <mods:dudro-contactDetails>$util.encodeXml($util.get($item, 'locrel:prc.foaf:Person.foaf:email'))</mods:dudro-contactDetails>
+            <mods:dudro-contactDetails>#_($util.encodeXml($util.get($item, 'locrel:prc.foaf:Person.foaf:email')))</mods:dudro-contactDetails>
         </mods:dudro-contact>
         #end
         #if ($util.get($item, 'locrel:prc.foaf:Person.foaf:name'))
         <mods:dudro-contact type="physical">
-            <mods:dudro-contactDetails>$util.encodeXml($util.get($item, 'locrel:prc.foaf:Person.foaf:name'))</mods:dudro-contactDetails>
+            <mods:dudro-contactDetails>#_($util.encodeXml($util.get($item, 'locrel:prc.foaf:Person.foaf:name')))</mods:dudro-contactDetails>
         </mods:dudro-contact>
         #end
     </mods:extension>
