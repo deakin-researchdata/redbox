@@ -247,7 +247,10 @@
             #set($grant_number = $grant_url.substring($lastIndex) )
             <mods:identifier type="grant_id">$util.encodeXml($grant_prefix) $util.encodeXml($grant_number)</mods:identifier>
         #else
-            <mods:identifier type="grant_id">DR $util.encodeXml($valueMap.get($key).get("redbox:grantNumber")) ($util.encodeXml($grant_url))</mods:identifier>
+            #set($grant_number = $valueMap.get($key).get("redbox:grantNumber") )
+            #if ("$!grant_number" != "")
+            <mods:identifier type="grant_id">DR $util.encodeXml($grant_number) ($util.encodeXml($grant_url))</mods:identifier>
+            #end
         #end
     #end
     </mods:relatedItem>
