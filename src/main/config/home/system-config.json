@@ -543,6 +543,12 @@
                         "type": "external",
                         "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=collection-published",
                         "timing": "0 0/5 * * * ?"
+                    },
+                    {
+                        "name": "process-notify-tim-action",
+                        "type": "external",
+                        "url": "http://localhost:${jetty.port}/footprints/default/process/timNotification.script",
+                        "timing": "0 05 * * * ?"
                     }
 				 ]
             }
