@@ -1124,7 +1124,7 @@
             "from":"${notification.sender}",
             "to": "${admin.email}",
             "subject":"Action Needed for NLA Unmatched Party Records",
-            "body":"Dear Deakin Research,<p> There are researchers who have submitted a metadata record to Research Data Australia who require an NLA identifier.<p> Please login to Trove Identities Manager (TIM):<p> <a href='https://www.nla.gov.au/tim/app/;jsessionid=z5iwazn6d9in1upod4t8yn837?wicket:bookmarkablePage=:au.gov.nla.dataadmin.pages.LoginPage'>https://www.nla.gov.au/tim/app/;jsessionid=z5iwazn6d9in1upod4t8yn837?wicket:bookmarkablePage=:au.gov.nla.dataadmin.pages.LoginPage</a><p> Please complete this process within 1 week.<p> If you require information on how to use TIM, training guides are available on the <a href='http://ands.org.au/training/trove/#usingtim'>ANDS website</a>.<p> Kind Regards,<p> Deakin eResearch.<p> <strong>Please do not reply to this email.</strong>"
+            "body":"Dear Deakin Research,<p> There are researchers who have submitted a metadata record to Research Data Australia who require an NLA identifier.<p> Please login to Trove Identities Manager (TIM):<p> <a href='https://www.nla.gov.au/tim/app'>https://www.nla.gov.au/tim/app/</a><p> Please complete this process within 1 week.<p> If you require information on how to use TIM, training guides are available on the <a href='http://ands.org.au/training/trove/#usingtim'>ANDS website</a>.<p> Kind Regards,<p> Deakin eResearch.<p> <strong>Please do not reply to this email.</strong>"
         }
     }
 }
