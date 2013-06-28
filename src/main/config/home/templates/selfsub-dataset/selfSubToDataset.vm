@@ -269,12 +269,14 @@
 	#if ($cList.size() > 0)
 	#foreach($key in $cList.keySet())
     	#set($slot = $cList.get($key))
-        #set($noteValue = $slot.get("dc.description") )
+        #set($noteValue = $slot.get("dc:description") )
         "skos:note.${key}.dc:description": "$!noteValue",
         "skos:note.${key}.dc:created": "1970-01-01 00:00:00",
         "skos:note.${key}.foaf:name": "Self-submission User",
     #end
     #end
+    "skos:note.1.local":"yes",
+    "skos:note.2.local":"yes",
 
 	
 "xmlns:dc": "http://dublincore.org/documents/2008/01/14/dcmi-terms/",
@@ -306,24 +308,55 @@
         "dc:coverage.vivo:GeographicLocation.1.dc:identifier",
         "dc:coverage.vivo:GeographicLocation.2.dc:identifier",
         "dc:description",
-        "dc:relation.swrc:Publication.1.dc:identifier",
-        "dc:relation.swrc:Publication.1.dc:title",
-        "dc:relation.swrc:Publication.1.skos:note",
-        "dc:relation.bibo:Website.1.dc:identifier",
-        "dc:relation.bibo:Website.1.dc:title",
-        "dc:relation.bibo:Website.1.skos:note",
-        "dc:relation.vivo:Dataset.1.dc:identifier",
-        "dc:relation.vivo:Dataset.1.vivo:Relationship.rdf:PlainLiteral",
-        "dc:relation.vivo:Dataset.1.vivo:Relationship.skos:prefLabel",
-        "dc:relation.vivo:Dataset.1.dc:title",
-        "dc:relation.vivo:Dataset.1.skos:note",
-        "dc:relation.vivo:Dataset.1.redbox:origin",
-        "dc:relation.vivo:Dataset.1.redbox:publish",
-        "dc:relation.vivo:Service.1.dc:identifier",
-        "dc:relation.vivo:Service.1.vivo:Relationship.rdf:PlainLiteral",
-        "dc:relation.vivo:Service.1.vivo:Relationship.skos:prefLabel",
-        "dc:relation.vivo:Service.1.dc:title",
-        "dc:relation.vivo:Service.1.skos:note",
+	#set($cList = $util.getList($item, "dc:relation.swrc:Publication"))
+	#set($order = 1)
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+        "dc:relation.swrc:Publication.${order}.dc:identifier",
+        "dc:relation.swrc:Publication.${order}.dc:title",
+        "dc:relation.swrc:Publication.${order}.skos:note",
+    	#set($order = $order + 1)
+    #end
+	#end
+
+	#set($cList = $util.getList($item, "dc:relation.bibo:Website"))
+	#set($order = 1)
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+        "dc:relation.bibo:Website.${order}.dc:identifier",
+        "dc:relation.bibo:Website.${order}.dc:title",
+        "dc:relation.bibo:Website.${order}.skos:note",
+    	#set($order = $order + 1)
+    #end
+	#end
+
+	#set($cList = $util.getList($item, "dc:relation.vivo:Dataset"))
+	#set($order = 1)
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+        "dc:relation.vivo:Dataset.${order}.dc:identifier",
+        "dc:relation.vivo:Dataset.${order}.vivo:Relationship.rdf:PlainLiteral",
+        "dc:relation.vivo:Dataset.${order}.vivo:Relationship.skos:prefLabel",
+        "dc:relation.vivo:Dataset.${order}.dc:title",
+        "dc:relation.vivo:Dataset.${order}.skos:note",
+        "dc:relation.vivo:Dataset.${order}.redbox:origin",
+        "dc:relation.vivo:Dataset.${order}.redbox:publish",
+    	#set($order = $order + 1)
+    #end
+	#end
+
+	#set($cList = $util.getList($item, "dc:relation.vivo:Service"))
+	#set($order = 1)
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+        "dc:relation.vivo:Service.${order}.dc:identifier",
+        "dc:relation.vivo:Service.${order}.vivo:Relationship.rdf:PlainLiteral",
+        "dc:relation.vivo:Service.${order}.vivo:Relationship.skos:prefLabel",
+        "dc:relation.vivo:Service.${order}.dc:title",
+        "dc:relation.vivo:Service.${order}.skos:note",
+    	#set($order = $order + 1)
+    #end
+	#end
         "dc:creator.foaf:Person.1.dc:identifier",
         "dc:creator.foaf:Person.1.foaf:name",
         "dc:creator.foaf:Person.1.foaf:title",
@@ -422,6 +455,8 @@
         "skos:note.${key}.dc:description",
     #end
     #end
+        "skos:note.1.local",
+        "skos:note.2.local",
         "dc:biblioGraphicCitation.skos:prefLabel",
         "dc:biblioGraphicCitation.redbox:sendCitation",
         "dc:biblioGraphicCitation.dc:hasPart.dc:identifier.skos:note",
