@@ -797,6 +797,7 @@
                             "field-name":"redbox:retentionPeriod.dc:date.skos:note",
                             "field-name-label":"redbox:retentionPeriod.dc:date.skos:note.prefLabel",
                             "label":"dmpt.field.label.redbox-retentionPeriod.dc-date.skos-note",
+                            "help":"dmpt.field.help.redbox-retentionPeriod.dc-date.skos-note",
                             "sourceUrl":"workflows/forms/data/retentionPeriodJustification.json",
                             "idKey":"id",
                             "labelKey":"label",

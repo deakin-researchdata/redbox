@@ -278,7 +278,7 @@ $(document).ready(function() {
                         },
                         {
                             "component-type": "text-input",
-                            "field-name": "skos:note.2.dc:description",
+                            "field-name": "skos:note.3.dc:description",
                             "label": "self-submission.field.label.dc-identifier.rdf-PlainLiteral.note",
                             "additional-classes": ""
                         },
@@ -405,6 +405,7 @@ $(document).ready(function() {
                         {
                             "component-type": "text-block",
                             "type": "label",
+                            "help": "self-submission.field.help.dc-subject.vivo-keyword"
                             "content": "self-submission.field.label.dc-subject.vivo-keyword"
                         },
                         {
@@ -715,12 +716,14 @@ $(document).ready(function() {
                             "sourceUrl": "workflows/forms/data/retentionPeriodJustification.json",
                             "idKey": "id",
                             "labelKey": "label",
+                            "help": "self-submission.field.help.redbox-retentionPeriod.dc-date.skos-note",
                             "listKey": "results"
                         },
                         {
                             "component-type": "text-input",
                             "field-name": "redbox:disposalDate",
                             "label": "self-submission.field.label.redbox-disposalDate",
+                            "help": "self-submission.field.help.redbox-disposalDate",
                             "additional-classes": "dateYMD"
                         },
                         {
@@ -766,22 +769,26 @@ $(document).ready(function() {
                             "component-type": "text-input",
                             "field-name": "dc:coverage.vivo:DateTimeInterval.vivo:start",
                             "label": "self-submission.field.label.dc-coverage.vivo-DateTimeInterval.vivo-start",
+                            "help": "self-submission.field.help.dc-coverage.vivo-DateTimeInterval.vivo-start",
                             "additional-classes": "dateYMD"
                         },
                         {
                             "component-type": "text-input",
                             "field-name": "dc:coverage.vivo:DateTimeInterval.vivo:end",
                             "label": "self-submission.field.label.dc-coverage.vivo-DateTimeInterval.vivo-end",
+                            "help": "self-submission.field.help.dc-coverage.vivo-DateTimeInterval.vivo-end",
                             "additional-classes": "dateYMD"
                         },
                         {
                             "component-type": "text-input",
                             "field-name": "dc:coverage.redbox:timePeriod",
+                            "help": "self-submission.field.help.dc-coverage.redbox-timePeriod",
                             "label": "self-submission.field.label.dc-coverage.redbox-timePeriod"
                         },
                         {
                             "component-type":"text-block",
                             "type":"h3",
+                            "help":"self-submission.heading.help.geospatial",
                             "content":"self-submission.heading.label.geospatial"
                         },
                         {
@@ -941,7 +948,23 @@ $(document).ready(function() {
                                            ]}
  
                         },
-
+                        {
+                            "component-type": "text-block",
+                            "type": "h3",
+                            "content": "self-submission.field.label.relation-service",
+                            "help": "self-submission.field.help.relation-service"
+                        },
+                        {
+                            "component-type": "repeatable-container",
+                            "containter-for": "dc:relation.vivo:Service",
+                            "sub-elements":{
+                                "settings":[
+                                               {"jaffaText":{"label":"URL", "class-list": "jaffa-field", "suffix":"dc:identifier"}},
+                                               {"jaffaText":{"label":"Title", "class-list": "jaffa-field", "suffix":"dc:title"}},
+                                               {"jaffaText":{"label":"Notes", "class-list": "jaffa-field", "suffix":"skos:note"}}
+                                           ]}
+ 
+                        },
                         {
                             "component-type": "transition-control",
                             "transitions": [
@@ -977,14 +1000,16 @@ $(document).ready(function() {
                         },
                         {
                             "component-type": "textarea",
-                            "field-name": "skos:note.0.dc:description",
+                            "field-name": "skos:note.1.dc:description",
                             "label": "self-submission.field.label.skos-note",
+                            "help": "self-submission.field.help.skos-note",
                             "content":""
                         },
                         {
                             "component-type": "textarea",
-                            "field-name": "skos:note.1.dc:description",
+                            "field-name": "skos:note.2.dc:description",
                             "label": "self-submission.field.label.contact-details",
+                            "help": "self-submission.field.help.contact-details",
                             "content":""
                         },
 						{
