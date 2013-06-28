@@ -151,7 +151,7 @@
                     "path": ["dc:identifier"],
                     "startsWith": "http://nla.gov.au/nla.party-"
                 },
-                "relationship": "hasAssociationWith",
+                "relationship": "IsPrimaryContactFor",
                 "description": "Primary Contact"
             },
             "swrc:supervisor.foaf:Person.0.dc:identifier": {
