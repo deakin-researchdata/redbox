@@ -233,6 +233,13 @@
     #foreach($key in $valueMap.keySet())
         <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
     #end
+  
+    ## Related Service 
+    #set($valueMap = $util.getList($item, "dc:relation.vivo:Service"))
+    #foreach($key in $valueMap.keySet())
+        <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
+    #end
+
 
     </mods:location>
 
