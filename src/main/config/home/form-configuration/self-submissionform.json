@@ -79,6 +79,10 @@ $(document).ready(function() {
                             "content": "self-submission.heading.label.overview"
                         },
                         {
+                            "component-type": "native-html",
+                            "content": "<p style='color:red;'>(*) is a mandatory field</p>"
+                        },
+                        {
                             "component-type": "text-block",
                             "type": "label",
                             "content": "self-submission.field.label.dc-title",
