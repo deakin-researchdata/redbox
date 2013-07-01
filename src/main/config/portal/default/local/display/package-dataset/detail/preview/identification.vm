@@ -4,7 +4,7 @@
     #set ($pId = $parent.getProperty($pidProperty))
     #if ($vPid != $nullValue)
 <div class="pId">
-    This object has already been published to VITAL '<strong>$vPid</strong>'.
+    This object has already been published to DRO '<strong>$vPid</strong>'.
     #if ($pId != $nullValue)
     (ACTIVE, Handle: <a href="$pId">$pId</a>)
     #else
