@@ -8,7 +8,7 @@
     "tls":"${smtp.tls}",
     "ssl":"${smtp.ssl}",
     "from":"${notification.sender}",
-    "to": "$_owner_email",
+    "to": "$_owner_email,${admin.email}",
     "subject":"Footprints Record Published: '$title'",
     "body":"Dear $_owner_name, <p> Please be advised that your following data collection description has been made available for harvesting by Research Data Australia.<p> <a href='${server.url.base}/dashboard/detail/$oid/'>$title</a><p> This harvest occurs periodically and you can expect to view your submission on <a href='http://dro.deakin.edu.au/'>Deakin Research Online</a> (DRO) and <a href='http://researchdata.ands.org.au'>Research Data Australia</a> (RDA) in a few days.<p> If you have any queries regarding your record please contact the DRO staff <a href='mailto:drosupport@deakin.edu.au'>drosupport@deakin.edu.au</a>, tel: 03 52272700 or your <a href='http://www.deakin.edu.au/library/about/liaison-librarians.php#about'>Liaison Librarian</a>.<p> Kind Regards,<p> Deakin eResearch<p> <strong>Please do not reply to this email</strong>.",
     "vars":[
