@@ -21,7 +21,10 @@
             ;
 
         jQuery(window).scroll(function() {
-            stickyEl.toggle(jQuery(window).scrollTop() > jQuery('#page-heading').offset().top );
+            stickyEl
+                .text( jQuery('#page-heading').text() )
+                .toggle(jQuery(window).scrollTop() > jQuery('#page-heading').offset().top )
+            ;
         });
 
     })
