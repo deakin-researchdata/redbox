@@ -235,6 +235,7 @@ span.required {
     margin: 4px 2em;
     padding: 4px;
     font-weight: normal;
+    width: 600px;
 }
 
 .help-content dl {
@@ -442,14 +443,28 @@ button.anzsrcSelection {
 
 #simpleworkflow-form .component-wrapper input[type=text] ,
 #simpleworkflow-form .component-wrapper textarea ,
-#simpleworkflow-form .component-wrapper select
+#simpleworkflow-form .component-wrapper select,
+#simpleworkflow-form .component-wrapper .grant-description
 {
-    width: 400px;
+    margin: 4px 2em;
+    padding: 4px;
+    width: 600px;
+}
+
+.people-field[id$=email]
+{
+    width: 160px !important ;
+}
+
+.lookupHolder input[type=text]
+{
+    width: 300px !important;
 }
 
 .people-field
 {
     width: 120px !important;
+    margin: 4px 2px !important ;
 }
 
 .jaffa-field-hidden
