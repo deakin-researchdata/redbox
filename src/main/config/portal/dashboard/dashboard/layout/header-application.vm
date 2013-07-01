@@ -13,7 +13,7 @@
         <a href="#" onclick="return false;">Views</a>
             <ul>
                 <li>
-                    <a href="$portalPath/../default/home?enable_default_view">Default View</a>
+                    <a href="$urlBase/default/home?enable_default_view">Default View</a>
                 </li>
             </ul>
         </li>
