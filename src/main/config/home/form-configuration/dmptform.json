@@ -41,6 +41,10 @@
                             "content":"dmpt.heading.projectOverview"
                         },
                         {
+                            "component-type": "native-html",
+                            "content": "<p style='color:red;'>(*) is a mandatory field</p>"
+                        },
+                        {
                             "component-type":"text-block",
                             "type":"label",
                             "content":"dmpt.field.label.dc-title",
