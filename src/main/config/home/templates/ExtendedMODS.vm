@@ -302,7 +302,7 @@
     ## GEOGRAPHIC
     #set($valueMap = $util.getList($item, "dc:coverage.vivo:GeographicLocation"))
     #foreach($key in $valueMap.keySet())
-    <subject><geographic>#_($util.encodeXml($valueMap.get($key).get('gn:name')))</geographic></subject> 
+    <subject><geographic>#_($util.encodeXml($valueMap.get($key).get('rdf:PlainLiteral')))</geographic></subject> 
     #end
 
 
@@ -311,12 +311,12 @@
     </mods:location>
 
     ## ACCESS CONDITION
-    <mods:accessCondition type="access">#_($util.encodeXml($util.get($item, 'dc:accessRights.rdf:PlainLiteral')))</mods:accessCondition>
+    <mods:accessCondition type="access">#_($util.encodeXml($util.get($item, 'dc:accessRights.skos:prefLabel')))</mods:accessCondition>
 
-    <mods:accessCondition type="notice">#_($util.encodeXml($util.get($item, 'dc:accessRights.dc:RightsStatement')))</mods:accessCondition>
-    <mods:accessCondition type="clearance">#_($util.encodeXml($util.get($item, 'redbox:creativeCommonsLicense.skos:prefLabel')))</mods:accessCondition>
+    <mods:accessCondition type="notice">#_($util.encodeXml($util.get($item, 'dc:accessRights.dc:RightsStatement.skos:prefLabel')))</mods:accessCondition>
+    <mods:accessCondition type="clearance">#_($util.encodeXml($util.get($item, 'dc:license.skos:prefLabel')))</mods:accessCondition>
 
-    <mods:accessCondition type="other_license">#_($util.encodeXml($util.get($item, 'dc:license.skos:prefLabel')))</mods:accessCondition>
+    <mods:accessCondition type="other_license">#_($util.encodeXml($util.get($item, 'dc:license.rdf:Alt.skos:prefLabel')))</mods:accessCondition>
     <mods:accessCondition type="data_owner">
     ## DATA OWNER
     #set($valueMap = $util.getList($item, "locrel:own.foaf:Agent"))

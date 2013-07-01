@@ -264,6 +264,11 @@
     #end
 	#end
 	
+	#set($familyName = $util.get($item, "locrel:prc.foaf:Person.foaf:familyName"))
+	#set($givenName = $util.get($item, "locrel:prc.foaf:Person.foaf:givenName"))
+	#set($email = $uoaf:Person.foaf:email"))
+	"locrel:prc.foaf:Person.foaf:name": "$familyName, $givenName",
+	"locrel:prc.foaf:Person.foaf:fullEmail": "$familyName $givenName<$email>",
 	
 	#set($cList = $util.getList($item, "skos:note"))
 	#if ($cList.size() > 0)
