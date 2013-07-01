@@ -4,18 +4,19 @@
             "Next": "Overview"
         },
         "Overview": {
+            "Back": "Welcome",
             "Next": "People"
         },
         "People": {
-            "Next": "dataStorage",
-            "Back": "Overview"
+            "Back": "Overview",
+            "Next": "dataStorage"
         },
         "dataStorage": {
         	"Back": "People",
             "Next": "EthicsSensitivities"
         },
         "EthicsSensitivities": {
-        	"Back": "People",
+        	"Back": "dataStorage",
             "Next": "Ownership"
         },
         "Ownership": {
