@@ -205,7 +205,8 @@
                         },
                         {
                             "component-type":"transition-control",
-                            "transitions":[{"name":"Next", "form-submit-action":"save", "type": "button"}]
+                            "transitions":[{"name":"Back", "type": "button"},
+                             			   {"name":"Next", "form-submit-action":"save", "type": "button"}]
                         },
                         {
                             "component-type": "transition-control",
