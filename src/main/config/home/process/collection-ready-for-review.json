@@ -1,4 +1,5 @@
 {
+    "testmode":"${smtp.testmode}",
     "host":"${smtp.host}",
     "port":"${smtp.port}",
     "username":"",
