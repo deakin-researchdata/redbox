@@ -133,5 +133,33 @@
                 "outputKey":""
             }
         ]
+    },
+    {
+        "id":"collection-ready-for-doi",
+        "pre" : [
+            {   
+                "class":"com.googlecode.fascinator.portal.process.NewRecordProcessor",
+                "config":"${fascinator.home}/process/newRecords-collection-ready-for-doi.json",
+                "inputKey":"",
+                "outputKey":"newOids"
+            }
+        ],
+        "process" : [
+            {   
+                "class":"com.googlecode.fascinator.portal.process.EmailNotifier",
+                "config":"${fascinator.home}/process/collection-ready-for-doi.json",
+                "inputKey":"newOids",
+                "outputKey":"failedOids"
+            }
+        ],
+        "post" : [
+            {   
+                "class":"com.googlecode.fascinator.portal.process.NewRecordProcessor",
+                "config":"${fascinator.home}/process/newRecords-collection-ready-for-doi.json",
+                "inputKey":"failedOids",
+                "outputKey":""
+            }
+        ]
     }
+
 ]

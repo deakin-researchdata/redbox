@@ -539,6 +539,12 @@
                         "timing": "0 0/5 * * * ?"
                     },
                     {
+                        "name": "process-notify-collection-ready-for-doi",
+                        "type": "external",
+                        "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=collection-ready-for-doi",
+                        "timing": "0 0/5 * * * ?"
+                    },
+                    {
                         "name": "process-notify-collectino-published",
                         "type": "external",
                         "url": "http://localhost:${jetty.port}/footprints/default/process/launch.script?processingSet=collection-published",

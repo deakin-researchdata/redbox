@@ -478,13 +478,7 @@ button[transition-name=Submit]
     font-weight: bolder ;
 }
 
-button[transition-name=Back],button[transition-name=Next]
-{
-    font-size: 1.2em;
-    margin-top: 16px;
-}
-
-button[transition-name*=Save]
+button[transition-name=Back],button[transition-name=Next],button[transition-name*=Save]
 {
     font-size: 1.2em;
     margin-top: 16px;
