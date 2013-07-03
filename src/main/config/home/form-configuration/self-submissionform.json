@@ -489,7 +489,7 @@ $(document).ready(function() {
                                 "validation-id": "dc:creator.foaf:Person.dc:identifier",
                                 "focus-id": "dc:creator.foaf:Person.foaf:title",
                                 "validation-messages": {
-                                    "required": "Chief investigator is required"
+                                    "required": "Chief investigator is required. Please select using the loopup."
                                 }
                             }
                         },
@@ -514,7 +514,7 @@ $(document).ready(function() {
                                 "validation-id": "locrel:prc.foaf:Person.dc:identifier",
                                 "focus-id": "locrel:prc.foaf:Person.foaf:title",
                                 "validation-messages": {
-                                    "required": "Data manager is required"
+                                    "required": "Data manager is required. Please select using the loopup."
                                 }
                             }
                         },

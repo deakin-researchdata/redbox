@@ -282,7 +282,7 @@
                         {
                         	"component-type":"person",
                         	"lookup-name":"locrel:rth.foaf:Person",
-                        	"lookup-only":"true",
+                        	"lookup-only":"false",
                             "validation": {
         									"save-rules": [
             									"required"
@@ -290,7 +290,7 @@
         									"validation-id": "locrel:rth.foaf:Person.dc:identifier",
         									"focus-id": "locrel:rth.foaf:Person.foaf:title",
         									 "validation-messages":{
-        									 						"required": "Chief investigator is required"
+        									 						"required": "Chief investigator is required. Please select using the loopup."
         									 						}
     						 			  }      
                         },
@@ -307,7 +307,7 @@
                         {
                         	"component-type":"person",
                         	"lookup-name":"locrel:prc.foaf:Person",
-                        	"lookup-only":"true",
+                        	"lookup-only":"false",
                             "validation": {
         									"save-rules": [
             									"required"
@@ -315,7 +315,7 @@
         									"validation-id": "locrel:prc.foaf:Person.dc:identifier",
         									"focus-id": "locrel:prc.foaf:Person.foaf:title",
         									 "validation-messages":{
-        									 						"required": "Data manager is required"
+        									 						"required": "Data manager is required. Please select using the loopup."
         									 						}
     						 			  }  
                         },
@@ -350,7 +350,7 @@
                         {
                         	"component-type":"person",
                         	"lookup-name":"swrc:supervisor.foaf:Person",
-                        	"lookup-only":"true"
+                        	"lookup-only":"false"
                         },
                         {
                             "component-type":"transition-control",
