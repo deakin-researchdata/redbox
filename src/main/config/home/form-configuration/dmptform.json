@@ -45,6 +45,10 @@
                             "content": "<p style='color:red;'>(*) is a mandatory field</p>"
                         },
                         {
+                            "component-type": "native-html",
+                            "content": "<p style='color:red;'>For suggestions on what to include in each field click <button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary'><span class='ui-icon ui-icon-help'></span></button></p>"
+                        },
+                        {
                             "component-type":"text-block",
                             "type":"label",
                             "content":"dmpt.field.label.dc-title",
@@ -127,6 +131,36 @@
                             "label":"",
                             "additional-classes":"dateYMD"
                         },
+                        {
+                            "component-type":"native-html",
+                            "content":"<script type='text/javascript'>
+                                            $(document).ready(function(){
+                                                v2.Validator.add({
+                                                    name: 'startAndEndDate',
+                                                    acceptEmpty: false,
+                                                    fn: function(field, value, params) {
+                                                        // Get the values from Jaffa
+                                                        var start_str = jaffa.form.value(params[0]) ;
+                                                        var end_str   = jaffa.form.value(params[1]) ;
+                                                        if( start_str && end_str)
+                                                        {
+                                                            var start = new Date(start_str);
+                                                            var end   = new Date(end_str);
+                                                            return end.getTime() >= start.getTime();
+                                                        }
+                                                        return true ;
+                                                    }
+                                                });
+                                                jaffa.valid.addNewRule('startAndEndDateRule', 'startAndEndDate', ['dc:coverage.vivo:DateTimeInterval.vivo:start','dc:coverage.vivo:DateTimeInterval.vivo:end']);
+                                                jaffa.valid.setSaveRules('dc:coverage.vivo:DateTimeInterval.vivo:end', ['startAndEndDateRule'], null, validationFail);
+                                            });                                            
+                                            var validation = {};
+                                            validationMessages = jQuery.parseJSON('{\"startAndEndDateRule\":\"End Date should not be earlier than Start Date\"}');
+                                            validation['validationMessages'] = validationMessages;
+                                            validation['focusId'] = 'dc:coverage.vivo:DateTimeInterval.vivo:end';
+                                            validationFieldMap['dc:coverage.vivo:DateTimeInterval.vivo:end'] = validation; 
+                                       </script>"
+                        },                        
                         {
                             "component-type":"text-block",
                             "type":"label",
