@@ -484,3 +484,7 @@ button[transition-name=Back],button[transition-name=Next],button[transition-name
     margin-top: 16px;
 }
 
+#simpleworkflow-form a
+{
+    color: blue;
+}
