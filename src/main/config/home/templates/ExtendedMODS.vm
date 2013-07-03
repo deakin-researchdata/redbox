@@ -211,6 +211,14 @@
     </mods:subject>
     #end
 
+    ## TOA CODE (Type of Research Activity)
+    #set($anzsrctoa = $util.get($item, 'dc:subject.anzsrc:toa.skos:prefLabel'))
+    #if ("$!anzsrctoa" != "")
+    <mods:subject  authority="anzsrctoa">
+        <mods:topic>#_($util.encodeXml($anzsrctoa))</mods:topic>
+    </mods:subject>
+    #end
+
     ## No classification info
 
     ## Related Publications 
