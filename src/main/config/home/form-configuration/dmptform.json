@@ -270,6 +270,10 @@
                             "content":"dmpt.heading.people"
                         },
                         {
+                            "component-type": "native-html",
+                            "content": "<p style='color:red;'>To select a person please use the lookup</p>"
+                        },
+                        {
                             "component-type":"text-block",
                             "type":"h3",
                             "content":"dmpt.field.label.locrel-rth.foaf-Person",
