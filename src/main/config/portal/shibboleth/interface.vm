@@ -1,1 +1,1 @@
-<a href="$shibboleth_url">Login</a>
+<button onclick="location.href='$shibboleth_url'; return false;">Login</button>
