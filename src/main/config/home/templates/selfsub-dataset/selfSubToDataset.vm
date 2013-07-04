@@ -45,16 +45,16 @@
 #end
 #end
 
-#macro(mapTo $from $to)
+#macro(stdMapTo $from $to)
     #set($v = $util.get($item, $from))
     #if ($v) "$to": "$!v",
     #end
 #end
 {
-	#mapTo('dc:title', 'title')
+	#stdMapTo('dc:title', 'title')
 	"viewId": "default",
     "packageType": "dataset",
-    #mapTo('dc:description', 'description')
+    #stdMapTo('dc:description', 'description')
 	"redbox:newForm": "$util.get($item, 'redbox:newForm')",
 	"redbox:formVersion": "$util.get($item, 'redbox:formVersion')",
 	"dc:title": "$util.get($item, 'dc:title')",
@@ -125,11 +125,11 @@
     #end
 	#end
 	
-	#mapTo('dc:creator.foaf:Person.foaf:title', 'dc:creator.foaf:Person.1.foaf:title')
-	#mapTo('dc:creator.foaf:Person.foaf:givenName', 'dc:creator.foaf:Person.1.foaf:givenName')
-	#mapTo('dc:creator.foaf:Person.foaf:familyName', 'dc:creator.foaf:Person.1.foaf:familyName')
-	#mapTo('dc:creator.foaf:Person.foaf:email', 'dc:creator.foaf:Person.1.foaf:email')
-	#mapTo('dc:creator.foaf:Person.dc:identifier', 'dc:creator.foaf:Person.1.dc:identifier')
+	#stdMapTo('dc:creator.foaf:Person.foaf:title', 'dc:creator.foaf:Person.1.foaf:title')
+	#stdMapTo('dc:creator.foaf:Person.foaf:givenName', 'dc:creator.foaf:Person.1.foaf:givenName')
+	#stdMapTo('dc:creator.foaf:Person.foaf:familyName', 'dc:creator.foaf:Person.1.foaf:familyName')
+	#stdMapTo('dc:creator.foaf:Person.foaf:email', 'dc:creator.foaf:Person.1.foaf:email')
+	#stdMapTo('dc:creator.foaf:Person.dc:identifier', 'dc:creator.foaf:Person.1.dc:identifier')
 	#set($ciFamilyName = $util.get($item, "dc:creator.foaf:Person.foaf:familyName"))
 	#set($ciGivenName = $util.get($item, "dc:creator.foaf:Person.foaf:givenName"))
 	#set($ciEmail = $util.get($item, "dc:creator.foaf:Person.foaf:email"))
@@ -160,11 +160,11 @@
     #end
 	#end
 	
-	#mapTo('swrc:supervisor.foaf:Person.foaf:title', 'swrc:supervisor.foaf:Person.1.foaf:title')
-	#mapTo('swrc:supervisor.foaf:Person.foaf:givenName', 'swrc:supervisor.foaf:Person.1.foaf:givenName')
-	#mapTo('swrc:supervisor.foaf:Person.foaf:familyName', 'swrc:supervisor.foaf:Person.1.foaf:familyName')
-	#mapTo('swrc:supervisor.foaf:Person.foaf:email', 'swrc:supervisor.foaf:Person.1.foaf:email')
-	#mapTo('swrc:supervisor.foaf:Person.dc:identifier', 'swrc:supervisor.foaf:Person.1.dc:identifier')
+	#stdMapTo('swrc:supervisor.foaf:Person.foaf:title', 'swrc:supervisor.foaf:Person.1.foaf:title')
+	#stdMapTo('swrc:supervisor.foaf:Person.foaf:givenName', 'swrc:supervisor.foaf:Person.1.foaf:givenName')
+	#stdMapTo('swrc:supervisor.foaf:Person.foaf:familyName', 'swrc:supervisor.foaf:Person.1.foaf:familyName')
+	#stdMapTo('swrc:supervisor.foaf:Person.foaf:email', 'swrc:supervisor.foaf:Person.1.foaf:email')
+	#stdMapTo('swrc:supervisor.foaf:Person.dc:identifier', 'swrc:supervisor.foaf:Person.1.dc:identifier')
 	#set($supFamilyName = $util.get($item, "swrc:supervisor.foaf:Person.foaf:familyName"))
 	#set($supGivenName = $util.get($item, "swrc:supervisor.foaf:Person.foaf:givenName"))
 	#set($supEmail = $util.get($item, "swrc:supervisor.foaf:Person.foaf:email"))
@@ -196,7 +196,7 @@
     #end
 	#end
 
-	#mapTo('redbox:retentionPeriod.dc:date.prefLabel', 'redbox:retentionPeriod')
+	#stdMapTo('redbox:retentionPeriod.dc:date.prefLabel', 'redbox:retentionPeriod')
 	
 	
 	#set($cList = $util.getList($item, "foaf:fundedBy.foaf:Agent"))
@@ -266,7 +266,7 @@
 	
 	#set($familyName = $util.get($item, "locrel:prc.foaf:Person.foaf:familyName"))
 	#set($givenName = $util.get($item, "locrel:prc.foaf:Person.foaf:givenName"))
-	#set($email = $uoaf:Person.foaf:email"))
+	#set($email = $util.get($item, "locrel:prc.foaf:Person.foaf:email"))
 	"locrel:prc.foaf:Person.foaf:name": "$familyName, $givenName",
 	"locrel:prc.foaf:Person.foaf:fullEmail": "$familyName $givenName<$email>",
 	
