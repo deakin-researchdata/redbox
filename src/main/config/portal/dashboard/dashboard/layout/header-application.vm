@@ -18,7 +18,7 @@
             </ul>
         </li>
 #end
-        <li><a href="https://www.deakin.edu.au/research/eresearch/manage-data/faq" target="_blank">Help</a></li>
+        <li><a href="http://www.deakin.edu.au/research/eresearch/manage-data/faq" target="_blank">Help</a></li>
         $!navContent
     </ul>
 </div>
