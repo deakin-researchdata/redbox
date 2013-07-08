@@ -7,7 +7,7 @@
     "tls":"false",
     "ssl":"false",
     "from":"${notification.sender}",
-    "to": "drosupport@deakin.edu.au,${admin.email}",
+    "to": "DRO<drosupport@deakin.edu.au>,${admin.email}",
     "subject":"New Footprints Record Ready for Review: '$title'",
     "body":"Dear DRO staff,<p> The following submission is ready for your review in Research Data Footprints.<p> <a href='${server.url.base}/dashboard/detail/$oid/'>$title</a> $_owner_name ($_owner_email) <p> Please login at: <a href='https://research-data.deakin.edu.au/footprints/'>https://research-data.deakin.edu.au/footprints/</a> <p> Steps on how to complete the review are available on the DRO wiki.<p> Please complete this process within 7 - 10 days.<p> If you have any technical issues please contact the eSolutions Service Desk on ext72400.<p> Kind Regards,<p> Deakin eResearch<p> <strong>Please do not reply to this email.</strong>",
     "vars":[
