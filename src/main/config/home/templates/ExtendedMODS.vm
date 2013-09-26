@@ -1,5 +1,5 @@
 #macro (_ $value)
-#if ("$!value" != "")$value#end				
+#if ("$!value" != "")#if ("$!value" != "Not Applicable")#if ("$!value" != "N/A")$value#end#end#end
 #end
 
 #set($dateFormat = "yyyy-MM-dd")
@@ -25,13 +25,8 @@
 	#foreach($key in $valueMap.keySet())
     #set($node=$valueMap.get($key))
 
+    #set ($nameID = $node.get("du:authorId"))
     #set ($uri = $node.get("dc:identifier"))
-    #if ("$!uri" != "")
-        #set($lastIndex = $uri.lastIndexOf('/') + 1 )
-        #set($nameID = $uri.substring($lastIndex) )
-    #else
-        #set($nameID = "")
-    #end
 
     ### Get NLA ID
     #set($valueList = $item.getJsonSimpleList("relationships"))
@@ -51,8 +46,7 @@
     #end
 
 
-    #if ("$!nameID" != "")
-	<mods:name ID="$nameID" authority="researchdata.its.deakin.edu.au" type="#_($util.encodeXml($nla_number))">
+	<mods:name ID="#_($nameID)" authority="Deakin University" type="#_($util.encodeXml($nla_number))">
 		<mods:namePart type="personal">#_($util.encodeXml($node.get("foaf:name")))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
@@ -69,7 +63,6 @@
         #end
 	</mods:name>
     #end
-    #end
 
 
 
@@ -78,13 +71,8 @@
 	#foreach($key in $valueMap.keySet())
     #set($node=$valueMap.get($key))
 
+    #set ($nameID = $node.get("du:authorId"))
     #set ($uri = $node.get("dc:identifier"))
-    #if ("$!uri" != "")
-        #set($lastIndex = $uri.lastIndexOf('/') + 1 )
-        #set($nameID = $uri.substring($lastIndex) )
-    #else
-        #set($nameID = "")
-    #end
  
     ### Get NLA ID
     #set($valueList = $item.getJsonSimpleList("relationships"))
@@ -105,8 +93,7 @@
 
 
 
-    #if ("$!nameID" != "")
-	<mods:name ID="$nameID" authority="research-data.deakin.edu.au" type="#_($util.encodeXml($nla_number))">
+	<mods:name ID="#_($nameID)" authority="Deakin University" type="#_($util.encodeXml($nla_number))">
 		<mods:namePart type="personal">#_($util.encodeXml($node.get("foaf:name")))</mods:namePart>
 		#set($affiliation = $node.get("foaf:Organization.skos:prefLabel"))
 		#if($affiliation)
@@ -118,7 +105,6 @@
         <mods:displayForm>supervisor</mods:displayForm>
 	</mods:name>
     #end
-    #end
 
  
 
@@ -127,7 +113,7 @@
 	#foreach($key in $valueMap.keySet())
     #set($node=$valueMap.get($key))
 		#set($affiliation = $node.get("foaf:Agent"))
-		#if($affiliation)
+		#if("$!affiliation" != "")
         <mods:name>
             <mods:namePart type="corporate">#_($util.encodeXml($affiliation))</mods:namePart>
             <mods:displayForm>collaborator</mods:displayForm>
@@ -175,7 +161,7 @@
 
 
     #set($abstract = $util.encodeXml($util.get($item, 'dc:description')))
-    <mods:abstract>#_($abstract.replaceAll("\n","<br/><br/>"))</mods:abstract>
+    <mods:abstract>#_($abstract)</mods:abstract>
 
     <mods:physicalDescription>
         <mods:extent>
@@ -227,25 +213,37 @@
 
     #set($valueMap = $util.getList($item, "dc:relation.swrc:Publication"))
     #foreach($key in $valueMap.keySet())
+    #set( $label = $valueMap.get($key).get('dc:title'))
+    #if( "$!label" != "")
         <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
+    #end
     #end
 
     ## Related Website 
     #set($valueMap = $util.getList($item, "dc:relation.bibo:Website"))
     #foreach($key in $valueMap.keySet())
+    #set( $label = $valueMap.get($key).get('dc:title'))
+    #if( "$!label" != "")
         <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
+    #end
     #end
 
     ## Related Data 
     #set($valueMap = $util.getList($item, "dc:relation.vivo:Dataset"))
     #foreach($key in $valueMap.keySet())
+    #set( $label = $valueMap.get($key).get('dc:title'))
+    #if( "$!label" != "")
         <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
+    #end
     #end
   
     ## Related Service 
     #set($valueMap = $util.getList($item, "dc:relation.vivo:Service"))
     #foreach($key in $valueMap.keySet())
+    #set( $label = $valueMap.get($key).get('dc:title'))
+    #if( "$!label" != "")
         <mods:url displayLabel="#_($util.encodeXml($valueMap.get($key).get('dc:title')))">#_($util.encodeXml($valueMap.get($key).get('dc:identifier')))</mods:url>
+    #end
     #end
 
 
@@ -255,6 +253,9 @@
     #set($valueMap = $util.getList($item, "foaf:fundedBy.vivo:Grant"))
     #foreach($key in $valueMap.keySet())
     #set($grant_url = $valueMap.get($key).get("dc:identifier") )
+        #if ($grant_url.contains('purl') == false)
+            #set($grant_url = $valueMap.get($key).get("du:url") )
+        #end
         #if ($grant_url.contains('purl'))
             #if ($grant_url.toLowerCase().contains('arc'))
                 #set($grant_prefix = "ARC")
@@ -268,18 +269,61 @@
         #else
             #set($grant_number = $valueMap.get($key).get("redbox:grantNumber") )
             #if ("$!grant_number" != "")
+            #if ("$!grant_url" != "")
             <mods:identifier type="grant_id">DR #_($util.encodeXml($grant_number)) (#_($util.encodeXml($grant_url)))</mods:identifier>
+            #end
             #end
         #end
     #end
     </mods:relatedItem>
+
+    ## Output DOI as an identifier
+    #set($showCitation = $util.get($item, "dc:biblioGraphicCitation.redbox:sendCitation"))
+    #if ("$!showCitation" != "" && $showCitation == "on")
+        #set($doiProperty = $systemConfig.getString($defaultOnError, "andsDoi", "doiProperty"))
+        #set ($doi = $util.getMetadata($object, $doiProperty))
+        ## Use the DOI by preference for a citation
+        #if ("$!doi" != "")
+            #set ($citeId = "http://dx.doi.org/${doi}")
+            #set ($citeIdType = "doi")
+            <!--
+            <mods:relatedItem type="series">
+            <mods:location>
+                <mods:url displayLabel="DOI text">$util.encodeXml($citeId)</mods:url> 
+            </mods:location>
+            </mods:relatedItem>
+            -->
+            <mods:identifier type="doi">$util.encodeXml($doi)</mods:identifier>
+        #end
+    #end
+
+    #set($showCitation = $util.get($item, "dc:biblioGraphicCitation.redbox:sendCitation"))
+    #if ("$!showCitation" != "" && $showCitation == "on")
+        #set($doiProperty = $systemConfig.getString($defaultOnError, "andsDoi", "doiProperty"))
+        #set ($doi = $util.getMetadata($object, $doiProperty))
+        ## Use the DOI by preference for a citation
+        #if ("$!doi" == "")
+            #set ($citeId = $identifier)
+            #set ($citeIdType = $identifierType)
+        #else
+            #set ($citeId = "http://dx.doi.org/${doi}")
+            #set ($citeIdType = "doi")
+        #end
+        #set($citationString = $util.get($item, "dc:biblioGraphicCitation.skos:prefLabel"))
+        #if ("$!citationString" != "")
+        <mods:note type="citation">
+            $util.encodeXml($citationString.replaceAll("\{ID_WILL_BE_HERE\}", $citeId))
+        </mods:note>
+        #end
+    #end
+
 
 
     <mods:note type="general">
     ## IDENTIFIER
     #set ($id = $util.get($item, 'dc:identifier.rdf:PlainLiteral')) 
     #if ("$!id" != "")
-    #_($util.encodeXml($util.get($item, 'dc:identifier.dc:type.rdf:PlainLiteral'))) | #_($util.encodeXml($id))
+    IDENTIFIER: #_($util.encodeXml($util.get($item, 'dc:identifier.dc:type.rdf:PlainLiteral'))) | #_($util.encodeXml($id))
     #end
 
     ## LOCATION
@@ -287,7 +331,7 @@
     #foreach($key in $valueMap.keySet())
     #set ($valueLoc = $valueMap.get($key).get('dc:identifier'))
     #if ("$!valueLoc" != "")
-    #_($util.encodeXml($valueLoc))
+    WEBSITE $key: #_($util.encodeXml($valueLoc))
     #end
     #end
  
@@ -295,13 +339,19 @@
     #set($valueMap = $util.getList($item, "skos:note"))
     #foreach($key in $valueMap.keySet())
     #set ($note = $valueMap.get($key).get('dc:description')) 
+    #set ($created = $valueMap.get($key).get('dc:created')) 
     #if ("$!note" != "")
-    #_($util.encodeXml($note).replaceAll("\\n","<br/><br/>")) [#_($util.encodeXml($valueMap.get($key).get('dc:created')))].
+    NOTES $key:
+    #_($util.encodeXml($note))
+    #if ("$!created" != "")
+    [#_($util.encodeXml($created))].
+    #end
     #end
     #end
 
-    #if ($util.get($item, 'dc:SizeOrDuration'))
-    #_($util.encodeXml($util.get($item, 'dc:SizeOrDuration'))).
+    #set($sizeOrDuration = $util.get($item, 'dc:SizeOrDuration'))
+    #if ("$!sizeOrDuration" != "")
+    Size_OR_DURATION: #_($util.encodeXml($util.get($item, 'dc:SizeOrDuration'))).
     #end
  
     </mods:note>
@@ -310,7 +360,9 @@
     ## GEOGRAPHIC
     #set($valueMap = $util.getList($item, "dc:coverage.vivo:GeographicLocation"))
     #foreach($key in $valueMap.keySet())
-    <subject><geographic>#_($util.encodeXml($valueMap.get($key).get('rdf:PlainLiteral')))</geographic></subject> 
+    <subject authority="#_($util.encodeXml($valueMap.get($key).get('dc:type')))">
+        <geographic>#_($util.encodeXml($valueMap.get($key).get('rdf:PlainLiteral')))</geographic>
+    </subject> 
     #end
 
 

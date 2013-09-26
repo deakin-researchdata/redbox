@@ -85,6 +85,18 @@
     #end
 	#end
 	
+	#set($cList = $util.getList($item, "dc:relation.swrc:Publication"))
+	#set($order = 1)
+	#if ($cList.size() > 0)
+	#foreach($key in $cList.keySet())
+    	#set($slot = $cList.get($key))
+    	#multiValuedProperty($slot "dc:relation.swrc:Publication" "dc:identifier" $order)
+    	#multiValuedProperty($slot "dc:relation.swrc:Publication" "dc:title" $order)
+    	#multiValuedProperty($slot "dc:relation.swrc:Publication" "skos:note" $order)
+    	#set($order = $order + 1)
+    #end
+	#end
+	
 	#set($cList = $util.getList($item, "dc:relation.bibo:Website"))
 	#set($order = 1)
 	#if ($cList.size() > 0)
@@ -127,6 +139,7 @@
 	
 	#stdMapTo('dc:creator.foaf:Person.foaf:title', 'dc:creator.foaf:Person.1.foaf:title')
 	#stdMapTo('dc:creator.foaf:Person.foaf:givenName', 'dc:creator.foaf:Person.1.foaf:givenName')
+	#stdMapTo('dc:creator.foaf:Person.du:authorId', 'dc:creator.foaf:Person.1.du:authorId')
 	#stdMapTo('dc:creator.foaf:Person.foaf:familyName', 'dc:creator.foaf:Person.1.foaf:familyName')
 	#stdMapTo('dc:creator.foaf:Person.foaf:email', 'dc:creator.foaf:Person.1.foaf:email')
 	#stdMapTo('dc:creator.foaf:Person.dc:identifier', 'dc:creator.foaf:Person.1.dc:identifier')
@@ -145,6 +158,7 @@
     	
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:title"  "foaf:title" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:givenName" "foaf:givenName" $order)
+    	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.du:authorId" "du:authorId" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:familyName" "foaf:familyName" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.foaf:email" "foaf:email" $order)
     	#multiValuedMappedProperty($slot "dc:creator.foaf:Person" "foaf:Agent.dc:identifier" "dc:identifier" $order)
@@ -162,6 +176,7 @@
 	
 	#stdMapTo('swrc:supervisor.foaf:Person.foaf:title', 'swrc:supervisor.foaf:Person.1.foaf:title')
 	#stdMapTo('swrc:supervisor.foaf:Person.foaf:givenName', 'swrc:supervisor.foaf:Person.1.foaf:givenName')
+	#stdMapTo('swrc:supervisor.foaf:Person.du:authorId', 'swrc:supervisor.foaf:Person.1.du:authorId')
 	#stdMapTo('swrc:supervisor.foaf:Person.foaf:familyName', 'swrc:supervisor.foaf:Person.1.foaf:familyName')
 	#stdMapTo('swrc:supervisor.foaf:Person.foaf:email', 'swrc:supervisor.foaf:Person.1.foaf:email')
 	#stdMapTo('swrc:supervisor.foaf:Person.dc:identifier', 'swrc:supervisor.foaf:Person.1.dc:identifier')
@@ -217,6 +232,7 @@
     	#set($slot = $cList.get($key))
     	"foaf:fundedBy.vivo:Grant.${order}.internalGrant": "",
     	#multiValuedProperty($slot "foaf:fundedBy.vivo:Grant" "redbox:grantNumber" $order)
+    	#multiValuedProperty($slot "foaf:fundedBy.vivo:Grant" "du:url" $order)
     	#multiValuedProperty($slot "foaf:fundedBy.vivo:Grant" "dc:identifier" $order)
     	#multiValuedProperty($slot "foaf:fundedBy.vivo:Grant" "skos:prefLabel" $order)
     	#set($order = $order + 1)
@@ -249,7 +265,7 @@
 	
 	#foreach( $key in ["dc:description",
 			 "locrel:prc.foaf:Person.foaf:title","locrel:prc.foaf:Person.foaf:givenName","locrel:prc.foaf:Person.foaf:familyName",
-             "locrel:prc.foaf:Person.dc:identifier","locrel:prc.foaf:Person.foaf:email", "dc:license.skos:prefLabel" ,"dc:license.dc:identifier",
+             "locrel:prc.foaf:Person.dc:identifier","locrel:prc.foaf:Person.du:authorId","locrel:prc.foaf:Person.foaf:email", "dc:license.skos:prefLabel" ,"dc:license.dc:identifier",
              "dc:license.rdf:Alt.skos:prefLabel","dc:license.rdf:Alt.dc:identifier","dc:identifier.rdf:PlainLiteral","dc:identifier.dc:type.rdf:PlainLiteral",
              "dc:identifier.dc:type.skos:prefLabel","dc:identifier.redbox:origin", "vivo:Location.vivo:GeographicLocation.gn:name",
              "dc:extent","redbox:disposalDate","locrel:dtm.foaf:Agent.foaf:name","foaf:Organization.dc:identifier",
@@ -282,6 +298,8 @@
     #end
     "skos:note.1.local":"yes",
     "skos:note.2.local":"yes",
+
+
 
 	
 "xmlns:dc": "http://dublincore.org/documents/2008/01/14/dcmi-terms/",
@@ -368,6 +386,7 @@
         "dc:creator.foaf:Person.1.redbox:isCoPrimaryInvestigator",
         "dc:creator.foaf:Person.1.redbox:isPrimaryInvestigator",
         "dc:creator.foaf:Person.1.foaf:givenName",
+        "dc:creator.foaf:Person.1.du:authorId",
         "dc:creator.foaf:Person.1.foaf:familyName",
         "dc:creator.foaf:Person.1.foaf:email",
         "dc:creator.foaf:Person.1.foaf:fullEmail",
@@ -377,6 +396,7 @@
         "locrel:prc.foaf:Person.foaf:name",
         "locrel:prc.foaf:Person.foaf:title",
         "locrel:prc.foaf:Person.foaf:givenName",
+        "locrel:prc.foaf:Person.du:authorId",
         "locrel:prc.foaf:Person.foaf:familyName",
         "locrel:prc.foaf:Person.foaf:email",
         "locrel:prc.foaf:Person.foaf:fullEmail",
@@ -384,6 +404,7 @@
         "swrc:supervisor.foaf:Person.1.foaf:name",
         "swrc:supervisor.foaf:Person.1.foaf:title",
         "swrc:supervisor.foaf:Person.1.foaf:givenName",
+        "swrc:supervisor.foaf:Person.1.du:authorId",
         "swrc:supervisor.foaf:Person.1.foaf:familyName",
         "swrc:supervisor.foaf:Person.1.foaf:email",
         "swrc:supervisor.foaf:Person.1.foaf:fullEmail",
@@ -402,6 +423,7 @@
     	
     	"dc:creator.foaf:Person.$order.foaf:title",
     	"dc:creator.foaf:Person.$order.foaf:givenName",
+    	"dc:creator.foaf:Person.$order.du:authorId",
     	"dc:creator.foaf:Person.$order.foaf:familyName",
     	"dc:creator.foaf:Person.$order.foaf:email",
     	"dc:creator.foaf:Person.$order.foaf:fullEmail",
@@ -444,6 +466,7 @@
         "foaf:fundedBy.foaf:Agent.1.dc:identifier",
         "foaf:fundedBy.vivo:Grant.1.redbox:internalGrant",
         "foaf:fundedBy.vivo:Grant.1.redbox:grantNumber",
+        "foaf:fundedBy.vivo:Grant.1.du:url",
         "foaf:fundedBy.vivo:Grant.1.dc:identifier",
         "foaf:fundedBy.vivo:Grant.1.skos:prefLabel",
         "swrc:ResearchProject.dc:title",
@@ -467,6 +490,7 @@
         "dc:biblioGraphicCitation.dc:hasPart.dc:identifier.skos:note",
         "dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.1.foaf:title",
         "dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.1.foaf:givenName",
+        "dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.1.du:authorId",
         "dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.1.foaf:familyName",
         "dc:biblioGraphicCitation.dc:hasPart.dc:title",
         "dc:biblioGraphicCitation.dc:hasPart.dc:hasVersion.rdf:PlainLiteral",

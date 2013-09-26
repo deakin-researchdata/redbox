@@ -9,6 +9,16 @@
 #set($date_created = "$util.getDateTime($util.get($item, 'dc:created'), $dateFormat)Z")
 <created_date>$date_created</created_date> 
 #end
+<additional_notes>
+#set($note = $util.get($item, "skos:note.1.dc:description"))
+#set($created = $util.get($item, "skos:note.1.dc:created"))
+#if ("$!note" != "")
+$util.encodeXml($note)
+#if ("$!created" != "")
+[$util.encodeXml($created)].
+#end
+#end
+</additional_notes>
 
 #if ($util.get($item, 'dc:modified') != "")
 #set($date_updated = "$util.getDateTime($util.get($item, 'dc:modified'), $dateFormat)Z")

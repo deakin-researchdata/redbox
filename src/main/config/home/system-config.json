@@ -168,6 +168,22 @@
                 "path": ["foaf:Organization"],
                 "identifier": ["dc:identifier"],
                 "relationship": "isManagedBy"
+            },
+            "foaf:fundedBy.vivo:Grant.0.dc:identifier": {
+                "path": [
+                    "foaf:fundedBy",
+                    "vivo:Grant"
+                ],
+                "identifier": [
+                    "dc:identifier"
+                ],
+                "relationship": "isOutputOf",
+                "excludeCondition": {
+                    "path": [
+                        "redbox:internalGrant"
+                    ],
+                    "value": "on"
+                }
             }
         },
         "reverseMappings": {

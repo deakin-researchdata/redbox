@@ -7,8 +7,11 @@
       $providers.get($ssoId).get("interface")
     </fieldset>
   </form>
+<!--
   <div class="or">OR</div>
+-->
   #end
+<!--
   <form class="ssoLogin" id="login" method="post" action="#">
     <fieldset class="search">
       <legend>Login As Local User</legend>
@@ -28,5 +31,6 @@
       <input id="login-cancel" type="button" value="Close" />
     </fieldset>
   </form>
+-->
 </div>
 

@@ -1,22 +1,15 @@
-var PeopleWidgetBuilder = function($, jaffa) {
-    var textClass = jaffa.widgets.baseWidget.extend({
+var GrantWidgetBuilder = function($, jaffa) {
+    var fundingBodyClass = jaffa.widgets.baseWidget.extend({
         field: null,
         oldField: null,
         v2rules: {},
 
         deleteWidget: function() {
-        	var titleFieldId= this.field+"foaf:title";
-            var givenNameFieldId= this.field+"foaf:givenName";
-            var familyNameFieldId= this.field+"foaf:familyName";
-            var emailFieldId= this.field+"foaf:email";
-            var dcIdentifierId = this.field+"dc:identifier";
-            var duAuthorId = this.field+"du:authorId";
-            jaffa.form.ignoreField(titleFieldId);
-            jaffa.form.ignoreField(givenNameFieldId);
-            jaffa.form.ignoreField(familyNameFieldId);
-            jaffa.form.ignoreField(emailFieldId);
-            jaffa.form.ignoreField(dcIdentifierId);
-            jaffa.form.ignoreField(duAuthorId);
+            jaffa.form.ignoreField(this.field+".displayLabel");
+            jaffa.form.ignoreField(this.field+"skos:prefLabel");
+            jaffa.form.ignoreField(this.field+"redbox:grantNumber");
+            jaffa.form.ignoreField(this.field+"du:url");
+            jaffa.form.ignoreField(this.field+"dc:identifier");
             this.getContainer().remove();
         },
         // Identity has been altered, adjust the DOM for all fields
@@ -29,39 +22,19 @@ var PeopleWidgetBuilder = function($, jaffa) {
             // Update DOM but constrain searches to container, since there may
             //  be very temporary duplicate IDs as sort orders swap
             var container = this.getContainer();
-            container.find("input[id=\""+this.oldField+"foaf:title\"]").attr("id", this.field+"foaf:title");
-            container.find("input[id=\""+this.oldField+"foaf:givenName\"]").attr("id", this.field+"foaf:givenName");
-            container.find("input[id=\""+this.oldField+"foaf:familyName\"]").attr("id", this.field+"foaf:familyName");
-            container.find("input[id=\""+this.oldField+"foaf:email\"]").attr("id", this.field+"foaf:email");
+             var container = this.getContainer();
+            container.find("input[id=\""+this.oldField+"skos:prefLabel\"]").attr("id", this.field+"skos:prefLabel");
+            container.find("input[id=\""+this.oldField+"redbox:grantNumber\"]").attr("id", this.field+"redbox:grantNumber");
+            container.find("input[id=\""+this.oldField+"du:url\"]").attr("id", this.field+"du:url");
             container.find("input[id=\""+this.oldField+"dc:identifier\"]").attr("id", this.field+"dc:identifier");
-            container.attr("id", container.attr("id").replace(from, to));
-            
+           
             // Tell Jaffa to ignore the field's this widget used to manage
-            var titleFieldId= this.oldField+"foaf:title";
-            var givenNameFieldId= this.oldField+"foaf:givenName";
-            var familyNameFieldId= this.oldField+"foaf:familyName";
-            var emailFieldId= this.oldField+"foaf:email";
-            var dcIdentifierId = this.oldField+"dc:identifier";
-            var duAuthorId = this.oldField+"du:authorId";
-            jaffa.form.ignoreField(titleFieldId);
-            jaffa.form.ignoreField(givenNameFieldId);
-            jaffa.form.ignoreField(familyNameFieldId);
-            jaffa.form.ignoreField(emailFieldId);
-            jaffa.form.ignoreField(dcIdentifierId);
-            jaffa.form.ignoreField(duAuthorId);
-            
-            titleFieldId= this.field+"foaf:title";
-            givenNameFieldId= this.field+"foaf:givenName";
-            familyNameFieldId= this.field+"foaf:familyName";
-            emailFieldId= this.field+"foaf:email";
-            dcIdentifierId = this.field+"dc:identifier";
-            duAuthorId = this.field+"du:authorId";
-            jaffa.form.addField(titleFieldId, this.id());
-           	jaffa.form.addField(givenNameFieldId, this.id());
-            jaffa.form.addField(familyNameFieldId, this.id());
-            jaffa.form.addField(emailFieldId, this.id());
-            jaffa.form.addField(dcIdentifierId, this.id());
-            jaffa.form.addField(duAuthorId, this.id());
+            jaffa.form.ignoreField(this.oldField);
+            jaffa.form.ignoreField(this.oldField+".displayLabel");
+            jaffa.form.ignoreField(this.oldField+"skos:prefLabel");
+            jaffa.form.ignoreField(this.oldField+"redbox:grantNumber");
+            jaffa.form.ignoreField(this.oldField+"du:url");
+            jaffa.form.ignoreField(this.oldField+"dc:identifier");
             
         },
         // Notify Jaffa that field <=> widget relations need to be updated
@@ -71,18 +44,10 @@ var PeopleWidgetBuilder = function($, jaffa) {
             // Only synch if an update has effected this widget
             if (this.oldField != null) {
                 this._super();
-                var titleFieldId= this.field+"foaf:title";
-            	var givenNameFieldId= this.field+"foaf:givenName";
-            	var familyNameFieldId= this.field+"foaf:familyName";
-            	var emailFieldId= this.field+"foaf:email";
-            	var dcIdentifierId = this.field+"dc:identifier";
-            	var duAuthorId = this.field+"du:authorId";
-            	jaffa.form.addField(titleFieldId, this.id());
-            	jaffa.form.addField(givenNameFieldId, this.id());
-            	jaffa.form.addField(familyNameFieldId, this.id());
-            	jaffa.form.addField(emailFieldId, this.id());
-            	jaffa.form.addField(dcIdentifierId, this.id());
-            	jaffa.form.addField(duAuthorId, this.id());
+            	jaffa.form.addField(this.field+"skos:prefLabel", this.id());
+            	jaffa.form.addField(this.field+"redbox:grantNumber", this.id());
+            	jaffa.form.addField(this.field+"du:url", this.id());
+                jaffa.form.addField(this.field+"dc:identifier", this.id());
                 this.oldField = null;
             }
             // TODO: Validation alterations ?? Doesn't seem to matter
@@ -101,38 +66,64 @@ var PeopleWidgetBuilder = function($, jaffa) {
                 jaffa.logError("No field name provided for widget '"+this.id()+"'. This is mandatory!");
                 return;
             }
-            if(this.field.indexOf(".", this.field.length - 1) == -1) {
-            	this.field = this.field+".";
+
+            // Label
+            var label = this.getConfig("label");
+            if (label != null) {
+                ui.append("<label for=\""+this.field+"\" class=\"widgetLabel\">"+label+"</label>");
             }
-            
-            var lookup_only = this.getConfig("lookup-only");
-            var titleFieldId= this.field+"foaf:title";
-            ui.append("<label for=\""+titleFieldId+"\" class=\"widgetLabel peopleWidgetLabel\">Title</label>");
-            ui.append("<input type=\"text\" id=\""+titleFieldId+"\" class=\"jaffa-field people-field\" />");
-            
-            var givenNameFieldId= this.field+"foaf:givenName";
-            ui.append("<label for=\""+givenNameFieldId+"\" class=\"widgetLabel peopleWidgetLabel\">Given Name</label>");
-            ui.append("<input type=\"text\" id=\""+givenNameFieldId+"\" class=\"jaffa-field people-field\" />");
-            
-            var familyNameFieldId= this.field+"foaf:familyName";
-            ui.append("<label for=\""+familyNameFieldId+"\" class=\"widgetLabel peopleWidgetLabel\">Family Name</label>");
-            ui.append("<input type=\"text\" id=\""+familyNameFieldId+"\" class=\"jaffa-field people-field\" />");
-            
-            var emailFieldId= this.field+"foaf:email";
-            ui.append("<label for=\""+emailFieldId+"\" class=\"widgetLabel peopleWidgetLabel\">Email</label>");
-            ui.append("<input type=\"text\" id=\""+emailFieldId+"\" class=\"jaffa-field people-field\" />");
 
-            var dcIdentifierId = this.field+"dc:identifier";
-            ui.append("<input type=\"hidden\" id=\""+dcIdentifierId+"\" class=\"jaffa-field\" />");
 
-            var duAuthorId = this.field+"du:authorId";
-            ui.append("<input type=\"hidden\" id=\""+duAuthorId+"\" class=\"jaffa-field\" />");
+            // Control
+            var type = this.getConfig("type") || "text";
+            var input = $("<input type=\""+type+"\" id=\""+this.field+"redbox:grantNumber\"   />");
+
+            var placeHolder = this.getConfig("placeholder");
+            if  (placeHolder != null) {
+              	input.attr("placeholder", placeHolder);
+            }
+
+            var size = this.getConfig("size");
+            if  (size != null){
+            	input.attr("size", size);
+            }
+
+            var classList = this.getConfig("class-list");
+            if  (classList != null){
+              	input.attr("class", classList)
+            }
+
+            ui.append(input);
             
-            var dlg_source = this.getConfig("source");
-            if (dlg_source == null) { dlg_source = 'mint'; }
-            ui.append("<button onclick='showMintNlaLookupDialog(this,\""+dlg_source+"\");return false;' class='mintNlaLookup' href='#'>lookup</button>");
-            ui.append("<a onclick='clearPeopleElements(this,\""+dlg_source+"\");return false;' class='clearMintNlaLookup' href='#'>clear</a>");
-            if (lookup_only) $("[id='" + this.id() + "'] input").attr('readonly','true');
+
+   				// Save current value of element
+  				input.attr('oldVal', input.val());
+   				// Look for changes in the value
+   				var fieldId = this.field;
+   				input.bind("propertychange keyup input paste", function(event){
+      					// If value has changed...
+      					if (input.attr('oldVal') != input.val()) {
+       						// Updated stored value
+       						input.attr('oldVal', input.val());
+       						$("[id='"+fieldId+"dc:identifier']").val('');
+       						$("[id='"+fieldId+"du:url']").val('');
+       						$("[id='"+fieldId+"skos:prefLabel']").val('');
+				     }
+  			    });
+            
+            
+            
+            
+  
+            
+            var hiddenInput = $("<input type=\"hidden\" id=\""+this.field+"dc:identifier\" />");
+            ui.append(hiddenInput);
+
+            var urlInput = $("<input type=\"hidden\" id=\""+this.field+"du:url\" />");
+            ui.append(urlInput);
+            
+            var descriptionLabel = $("<input id=\""+this.field+"skos:prefLabel\" disabled=\"disabled\" class=\"grant-description\" />");
+            ui.append(descriptionLabel);
             // Are we tying any data lookups to the control?
             var lookupData = this.getConfig("lookup-data");
             if (lookupData != null) {
@@ -157,6 +148,9 @@ var PeopleWidgetBuilder = function($, jaffa) {
 
                     // How to parse a response
                     var responseParser = this.getConfig("lookup-parser") || {};
+                    responseParser["outputs"][hiddenInput.attr('id')]= "${identifier}";
+                    responseParser["outputs"][urlInput.attr('id')]= "${URL_ADDRESS}";
+                    responseParser["outputs"][descriptionLabel.attr('id')]= "(${repoName}) ${name}";
                     var resultsPath = responseParser["results-path"] || [];
 
                     var thisWidget = this;
@@ -189,23 +183,75 @@ var PeopleWidgetBuilder = function($, jaffa) {
 
                                 // Map and return
                                 response($.map(results, mapWrap));
+                            },
+                            "error": function (jqHXR, textStatus, error) {
+                            	alert(error);
                             }
                         });
                     }
-                    select = thisWidget.onSelectItemHandling;
+                    
+                }
+
+                input.autocomplete({
+                    "source": source,
+                    "select": function(event, ui) {
+                    var targetId = $(event.target).attr('id');
+            	targetId = targetId.substring(0,targetId.length-18);
+           		 for (var field in ui.item) {
+            	
+                if (field != "label" && field != "value") {
+                    var value = ui.item[field];
+                    var found = false;
+                    // First, is the target a Jaffa field?
+                    if(field.indexOf(targetId) == 0) {
+                    var target = jaffa.form.field(field);
+                    if (target != null) {
+                        jaffa.form.value(field, value);
+                        $("[id='"+field+"']").change();
+                        found = true;
+                    }
+
+                    // Second, is it in our document as a selector?
+                    target = $(field);
+                    if (found == false && target != null) {
+                    	if(target.is("input")) {
+                    		target.val(value);
+                    	} else {
+                        	target.html(value);
+                        }
+                        target.change();
+                        found = true;
+                    }
+					
+                    // Hmm, log something
+                    if (!found) {
+                        jaffa.logWarning("Unable to send output to '"+field+"', could not find anything meaningful with that value.");
+                    }
+                    }
+
                 }
             }
+        }
+                });
+            }
 
-            jaffa.form.addField(titleFieldId,  this.id());
-            jaffa.form.addField(givenNameFieldId,  this.id());
-            jaffa.form.addField(familyNameFieldId,  this.id());
-            jaffa.form.addField(emailFieldId,  this.id());
-            jaffa.form.addField(dcIdentifierId,  this.id());
-            jaffa.form.addField(duAuthorId,  this.id());
-            
+            // And is there a starting value?
+            var defaultValue = this.getConfig("default-value");
+            if (defaultValue != null) {
+                input.val(defaultValue);
+            }
+
+            jaffa.form.addField(hiddenInput.attr('id'), this.id());
+            jaffa.form.addField(urlInput.attr('id'), this.id());
+            jaffa.form.addField(input.attr('id'), this.id());
+            jaffa.form.addField(descriptionLabel.attr('id'), this.id());
 
             // Add help content
             this._super();
+
+            // Activating a change trigger will synch
+            //  all fields and the managed data
+            input.trigger("change");
 
             // Complicated validation gets preference
             var v2Rules = this.getConfig("v2Rules");
@@ -293,23 +339,23 @@ var PeopleWidgetBuilder = function($, jaffa) {
     });
 
     // *****************************************
-    // Let Jaffa know how things hang together. 'jaffaPeople' is how the
-    //   developer can create a widget, eg: $("#id").jaffaPeople();
+    // Let Jaffa know how things hang together. 'jaffaText' is how the
+    //   developer can create a widget, eg: $("#id").jaffaText();
     // And the class links to the above variable that is a valid widget
     //   implementation, extending the Jaffa bas widget.
-    jaffa.widgets.registerWidget("jaffaPeople", textClass);
+    jaffa.widgets.registerWidget("jaffaGrant", fundingBodyClass);
 }
-$.requestWidgetLoad(PeopleWidgetBuilder);
+$.requestWidgetLoad(GrantWidgetBuilder);
 
-var PeopleRepeatableWidgetBuilder = function($, jaffa) {
+var GrantRepeatableWidgetBuilder = function($, jaffa) {
     var textRepeatableClass = jaffa.widgets.listWidget.extend({
         init: function(config, container) {
             this._super(config, container);
             // Make sure 'listWidget' knows how to create each element
-            this.childCreator("jaffaPeople");
+            this.childCreator("jaffaGrant");
         }
     });
-    jaffa.widgets.registerWidget("jaffaPeopleRepeatable", textRepeatableClass);
+    jaffa.widgets.registerWidget("jaffaGrantRepeatable", textRepeatableClass);
 }
-$.requestWidgetLoad(PeopleRepeatableWidgetBuilder);
+$.requestWidgetLoad(GrantRepeatableWidgetBuilder);
 
